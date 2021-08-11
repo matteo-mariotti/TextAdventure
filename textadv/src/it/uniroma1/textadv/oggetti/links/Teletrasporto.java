@@ -1,10 +1,10 @@
-package it.uniroma1.textadv.links;
+package it.uniroma1.textadv.oggetti.links;
 
 import it.uniroma1.textadv.rooms.Room;
 
-public class Porta extends Link{
+public class Teletrasporto extends Link {
 
-	public Porta(String nome, Room stanzaPartenza, Room stanzaDestinazione) {
+	public Teletrasporto(String nome,Room stanzaPartenza, Room stanzaDestinazione) {
 		super(nome, stanzaPartenza, stanzaDestinazione);
 	}
 
@@ -13,5 +13,5 @@ public class Porta extends Link{
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }

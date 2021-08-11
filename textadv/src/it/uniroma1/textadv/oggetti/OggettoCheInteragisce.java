@@ -18,5 +18,7 @@ public abstract class OggettoCheInteragisce extends Oggetto {
 	public void addInteraction(Oggetto ogg) {
 		interazione = ogg;
 	}
+	
+	public abstract void azione();
 
 }

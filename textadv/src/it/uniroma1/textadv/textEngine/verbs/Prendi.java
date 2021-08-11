@@ -21,4 +21,15 @@ public class Prendi extends Verbo{
 		}
 	}
 	
+	//Prendi un oggetto dalla stanza
+	public void esegui(String oggetto) {
+		ElementiStanza ogg;
+		try {
+			ogg = Giocatore.instanceOf().getStanza().getElemento(oggetto);
+			Giocatore.instanceOf().addOggetto(ogg);
+		} catch (OggettoInesistenteException e) {
+			System.out.println("L'oggetto non è presente nella stanza");
+		}
+	}
+	
 }

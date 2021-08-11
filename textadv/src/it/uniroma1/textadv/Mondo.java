@@ -14,11 +14,11 @@ import java.util.Map;
 import it.uniroma1.textadv.characters.Entita;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.characters.Guardiano;
-import it.uniroma1.textadv.links.Link;
 import it.uniroma1.textadv.oggetti.Chiave;
 import it.uniroma1.textadv.oggetti.Oggetto;
 import it.uniroma1.textadv.oggetti.OggettoCheInteragisce;
 import it.uniroma1.textadv.oggetti.Tesoro;
+import it.uniroma1.textadv.oggetti.links.Link;
 import it.uniroma1.textadv.rooms.Room;
 
 public class Mondo {
@@ -167,14 +167,14 @@ public class Mondo {
 			case "objects" -> {
 				String[] ogg = dati[1].split(",");
 				for (String oggetto : ogg) {
-					room.addObjects(oggetti.get(oggetto.strip()));
+					room.addElementi(oggetti.get(oggetto.strip()));
 				}
 			}
 			case "characters" -> {
 				if (dati.length == 2) {
 					String[] ents = dati[1].split(",");
 					for (String pers : ents) {
-						room.addCharacters(personaggi.get(pers));
+						room.addElementi(personaggi.get(pers));
 					}
 				}
 			}

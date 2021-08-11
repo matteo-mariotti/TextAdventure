@@ -9,6 +9,12 @@ public class Cassetto extends OggettoCheInteragisce{
 	public Cassetto(String nome) {
 		super(nome);
 	}
+
+	@Override
+	public void azione() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

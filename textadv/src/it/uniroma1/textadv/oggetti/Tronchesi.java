@@ -9,5 +9,11 @@ public class Tronchesi extends OggettoCheInteragisce{
 	public Tronchesi(String nome) {
 		super(nome);
 	}
+
+	@Override
+	public void azione() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

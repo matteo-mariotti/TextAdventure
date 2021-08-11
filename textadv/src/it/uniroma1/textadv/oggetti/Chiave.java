@@ -9,5 +9,11 @@ public class Chiave extends OggettoCheInteragisce{
 	public Chiave(String nome) {
 		super(nome);
 	}
+
+	@Override
+	public void azione() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import it.uniroma1.textadv.characters.Entita;
-import it.uniroma1.textadv.links.Link;
 import it.uniroma1.textadv.oggetti.Oggetto;
+import it.uniroma1.textadv.oggetti.links.Link;
 
 public class RoomOldVers {
 

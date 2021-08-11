@@ -1,4 +1,4 @@
-package it.uniroma1.textadv.links;
+package it.uniroma1.textadv.oggetti.links;
 
 import it.uniroma1.textadv.rooms.Room;
 

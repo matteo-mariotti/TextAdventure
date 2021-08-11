@@ -8,9 +8,10 @@ import java.util.stream.Collectors;
 
 import it.uniroma1.textadv.ElementiStanza;
 import it.uniroma1.textadv.characters.Entita;
-import it.uniroma1.textadv.links.Link;
 import it.uniroma1.textadv.oggetti.Oggetto;
+import it.uniroma1.textadv.oggetti.links.Link;
 import it.uniroma1.textadv.textEngine.Direzione;
+import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
 public class Room {
 
@@ -41,7 +42,9 @@ public class Room {
 		}
 
 		public boolean locked() {
-			return l.status();
+			if (l!=null)
+				return l.status();
+			return false;
 		}
 		
 		public String toString() {
@@ -107,7 +110,13 @@ public class Room {
 		};
 	}
 
-	
+	public ElementiStanza getElemento(String nomeElemento) throws OggettoInesistenteException {
+		if (elementi.containsKey(nomeElemento)) {
+			ElementiStanza e =elementi.get(nomeElemento);
+			elementi.remove(nomeElemento);
+			return e;}
+		throw new OggettoInesistenteException();
+	}
 	
 	public Link getLink(String s) throws CollegamentoInesistenteException {
 		List<LinkTuple> l =  new ArrayList<>();
@@ -121,12 +130,12 @@ public class Room {
 		return l1.get(0);
 	}
 
-	private Room getDirection(LinkTuple l) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption {
-		if (l == null)
+	private Room getDirection(LinkTuple link) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption {
+		if (link == null)
 			throw new DirezioneNonConsentitaException();	
-		if (l.locked())
+		if (link.locked())
 			throw new ChiaveNecessariaExeption(); 
-		return l.getRoom();
+		return link.getRoom();
 	}
 	
 	private Room getDirection(LinkTuple l, String s) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption {
@@ -141,18 +150,12 @@ public class Room {
 		return l.getRoom();
 	}
 
-	public Room addCharacters(Entita pers) {
-		elementi.put(pers.getNome(), pers);
-		return this;
-	}
-
-	public Room addObjects(Oggetto ogg) {
+	public void addElementi(ElementiStanza ogg) {
 		elementi.put(ogg.getNome(), ogg);
-		return this;
 	}
 
-	public void describe() {
-		System.out.println(description);
+	public String describe() {
+		return toString();
 	}
 
 	public Map<String, ElementiStanza> listaElementi() {
@@ -167,6 +170,8 @@ public class Room {
 		s.append(linkS == null ? "" : "S: " + linkS + " ");
 		s.append(linkE == null ? "" : "E: " + linkE + " ");
 		s.append(linkW == null ? "" : "W: " + linkW + " ");
+		s.append("La stanza contiene: ");
+		s.append(elementi.keySet());
 		return s.toString();
 	}
 }

@@ -20,4 +20,8 @@ public abstract class ElementiStanza {
 		return nome; 
 	}
 	
+	public String describe() {
+		return toString();
+	}
+	
 }

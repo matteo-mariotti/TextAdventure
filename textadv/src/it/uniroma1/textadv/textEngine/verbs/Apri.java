@@ -1,8 +1,8 @@
 package it.uniroma1.textadv.textEngine.verbs;
 
 import it.uniroma1.textadv.characters.Giocatore;
-import it.uniroma1.textadv.links.Link;
 import it.uniroma1.textadv.oggetti.Openable;
+import it.uniroma1.textadv.oggetti.links.Link;
 import it.uniroma1.textadv.rooms.CollegamentoInesistenteException;
 import it.uniroma1.textadv.textEngine.ObjFinder;
 import it.uniroma1.textadv.textEngine.OggettoInesistenteException;

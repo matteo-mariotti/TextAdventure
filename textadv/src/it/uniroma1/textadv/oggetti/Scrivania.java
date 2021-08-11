@@ -37,4 +37,10 @@ public class Scrivania extends OggettoCheInteragisce implements Openable, Box {
 			return null; //TODO Lancia una eccezione perche non contiene l'elemento
 	}
 
+	@Override
+	public void azione() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
