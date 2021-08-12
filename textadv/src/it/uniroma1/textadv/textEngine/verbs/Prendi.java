@@ -3,6 +3,10 @@ package it.uniroma1.textadv.textEngine.verbs;
 import it.uniroma1.textadv.ElementiStanza;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.Box;
+import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
+import it.uniroma1.textadv.rooms.CollegamentoInesistenteException;
+import it.uniroma1.textadv.rooms.DirezioneNonConsentitaException;
+import it.uniroma1.textadv.rooms.Room;
 import it.uniroma1.textadv.textEngine.ObjFinder;
 import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
@@ -21,14 +25,25 @@ public class Prendi extends Verbo{
 		}
 	}
 	
-	//Prendi un oggetto dalla stanza
+	//Prendi un oggetto dalla stanza oppure prendi un link
 	public void esegui(String oggetto) {
 		ElementiStanza ogg;
 		try {
 			ogg = Giocatore.instanceOf().getStanza().getElemento(oggetto);
 			Giocatore.instanceOf().addOggetto(ogg);
 		} catch (OggettoInesistenteException e) {
-			System.out.println("L'oggetto non è presente nella stanza");
+			try {
+			Room l = Giocatore.instanceOf().getStanza().getDestRoom(oggetto);
+			Giocatore.instanceOf().setRoom(l);
+			System.out.println("Ti trovi ora in: " + l.getNome());
+			}catch(ChiaveNecessariaExeption e2)
+			{
+				System.out.println("Ti serve una chiave per aprire questo collegamento");
+			}
+			catch(CollegamentoInesistenteException | DirezioneNonConsentitaException e1) {
+				System.out.println("Non esiste nè un oggetto nè un link che si chiama così nella stanza");
+			}
+			
 		}
 	}
 	

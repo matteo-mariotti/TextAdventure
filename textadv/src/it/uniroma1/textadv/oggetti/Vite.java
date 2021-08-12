@@ -14,6 +14,7 @@ public class Vite extends OggettoCheInteragisce implements Unscrewable{
 	@Override
 	public void svita() {
 		((Openable) super.interazione).unlock(this);
+		System.out.println("Vite svitata");
 	}
 
 	

@@ -6,5 +6,6 @@ public class Porta extends Link{
 
 	public Porta(String nome, Room stanzaPartenza, Room stanzaDestinazione) {
 		super(nome, stanzaPartenza, stanzaDestinazione);
+		super.lock();
 	}
 }

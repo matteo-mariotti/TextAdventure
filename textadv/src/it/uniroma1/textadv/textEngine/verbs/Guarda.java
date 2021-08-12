@@ -9,7 +9,7 @@ public class Guarda extends Verbo {
 
 	public void esegui(String elemento) throws OggettoInesistenteException {
 		ElementiStanza ogg = ObjFinder.getArg(elemento);
-		System.out.println(ogg.toString());
+		System.out.println(ogg.describe());
 	}
 	
 	public void esegui() {

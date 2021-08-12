@@ -109,6 +109,8 @@ public class Room {
 		case EAST, EST, E -> getDirection(linkE);
 		};
 	}
+	
+	
 
 	public ElementiStanza getElemento(String nomeElemento) throws OggettoInesistenteException {
 		if (elementi.containsKey(nomeElemento)) {
@@ -118,16 +120,24 @@ public class Room {
 		throw new OggettoInesistenteException();
 	}
 	
+	public Room getDestRoom(String nomeLink) throws CollegamentoInesistenteException, DirezioneNonConsentitaException, ChiaveNecessariaExeption {
+		return getDirection(getLinkTuple(nomeLink));
+	}
+	
 	public Link getLink(String s) throws CollegamentoInesistenteException {
+		return getLinkTuple(s).getLink(); 
+	}
+	
+	private LinkTuple getLinkTuple(String s) throws CollegamentoInesistenteException {
 		List<LinkTuple> l =  new ArrayList<>();
 		l.add(linkE);
 		l.add(linkN);
 		l.add(linkS);
 		l.add(linkW);
-		List<Link>	l1  = l.stream().filter(x->x!=null).filter(x->x.getLink()!=null).filter(x -> x.getNome().equals(s)).map(x -> x.getLink()).collect(Collectors.toList());
+		l  = l.stream().filter(x->x!=null).filter(x->x.getLink()!=null).filter(x -> x.getNome().equals(s)).collect(Collectors.toList());
 		if (l.isEmpty())
 			throw new CollegamentoInesistenteException();
-		return l1.get(0);
+		return l.get(0);
 	}
 
 	private Room getDirection(LinkTuple link) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption {
@@ -138,17 +148,6 @@ public class Room {
 		return link.getRoom();
 	}
 	
-	private Room getDirection(LinkTuple l, String s) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption {
-		if (l == null)
-			throw new DirezioneNonConsentitaException();
-		if (l.getLink() != null) {
-			if (l.getNome().equals(s) || l.getNomeStanza().equals(s)) {
-				if (l.locked())
-					throw new ChiaveNecessariaExeption(); 
-				return l.getRoom();}
-		}
-		return l.getRoom();
-	}
 
 	public void addElementi(ElementiStanza ogg) {
 		elementi.put(ogg.getNome(), ogg);
@@ -165,12 +164,12 @@ public class Room {
 	public String toString() {
 		StringBuffer s = new StringBuffer();
 		s.append("Nome: " + nomeStanza + " ");
-		s.append("Descrizione: " + description + " ");
-		s.append(linkN == null ? "" : "N: " + linkN + " ");
-		s.append(linkS == null ? "" : "S: " + linkS + " ");
-		s.append(linkE == null ? "" : "E: " + linkE + " ");
-		s.append(linkW == null ? "" : "W: " + linkW + " ");
-		s.append("La stanza contiene: ");
+		s.append("\nDescrizione: " + description + " ");
+		s.append(linkN == null ? "" : "\nN: " + linkN + " ");
+		s.append(linkS == null ? "" : "\nS: " + linkS + " ");
+		s.append(linkE == null ? "" : "\nE: " + linkE + " ");
+		s.append(linkW == null ? "" : "\nW: " + linkW + " ");
+		s.append("\nLa stanza contiene: ");
 		s.append(elementi.keySet());
 		return s.toString();
 	}

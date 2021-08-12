@@ -9,7 +9,7 @@ public abstract class Link extends Oggetto implements Openable {
 
 	Room stanza1;
 	Room stanza2;
-	boolean bChiuso = true;
+	boolean bChiuso = false;
 	Oggetto chiave = null;
 
 	public Link(String nome, Room stanzaPartenza, Room stanzaDestinazione) {
@@ -29,6 +29,7 @@ public abstract class Link extends Oggetto implements Openable {
 	}
 
 	public void setClosed(Oggetto chiave) {
+		lock();
 		this.chiave = chiave;
 	}
 
@@ -50,12 +51,18 @@ public abstract class Link extends Oggetto implements Openable {
 	}
 
 	
+	public void lock() {
+		bChiuso = true;
+	}
+	
 	public boolean unlock(Oggetto chiave) {
 		if (this.chiave == chiave)
 		{
 			this.chiave = null;
 			return true;
-		}
+		}else if (chiave == null) {
+			bChiuso = false;
+			return true;}
 		return false;
 	}
 	public void open(Oggetto chiave) {
