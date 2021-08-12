@@ -10,11 +10,6 @@ public class Cassetto extends OggettoCheInteragisce{
 		super(nome);
 	}
 
-	@Override
-	public void azione() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+
 	
 }

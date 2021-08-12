@@ -15,12 +15,6 @@ public class Camino extends OggettoCheInteragisce{
 	public String toString() {
 		return "Il camino è " + (acceso ? "acceso" : "spento") + " e contiene: " + super.interazione; 
 	}
-
-	@Override
-	public void azione() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 }

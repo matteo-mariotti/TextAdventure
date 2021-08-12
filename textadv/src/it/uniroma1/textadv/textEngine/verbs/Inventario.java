@@ -8,7 +8,7 @@ public class Inventario extends Verbo {
 		if (Giocatore.instanceOf().getInventario().isEmpty())
 			System.out.println("Inventario vuoto");
 		else
-			Giocatore.instanceOf().getInventario().stream().forEach(x -> System.out.println(x));
+			Giocatore.instanceOf().getInventario().values().stream().forEach(x -> System.out.println(x));
 	}
 
 }

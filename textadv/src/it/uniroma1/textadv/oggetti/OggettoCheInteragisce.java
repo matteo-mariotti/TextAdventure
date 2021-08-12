@@ -19,6 +19,6 @@ public abstract class OggettoCheInteragisce extends Oggetto {
 		interazione = ogg;
 	}
 	
-	public abstract void azione();
+	
 
 }

@@ -4,4 +4,5 @@ public interface Breakable {
 
 	void rompi(Oggetto ogg);
 	
+	void rompi();
 }

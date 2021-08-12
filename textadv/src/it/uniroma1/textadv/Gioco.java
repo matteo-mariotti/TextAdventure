@@ -4,9 +4,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 import it.uniroma1.textadv.characters.Giocatore;
-import it.uniroma1.textadv.oggetti.Oggetto;
 import it.uniroma1.textadv.textEngine.MotoreTestuale;
 import it.uniroma1.textadv.textEngine.verbs.Verbo;
 
@@ -78,8 +78,8 @@ public class Gioco {
 	}*/
 	
 	private boolean vittoria(Mondo m) {
-		List<ElementiStanza> lista = Giocatore.instanceOf().getInventario();
-		return lista.stream().anyMatch(x -> x == m.getWinningObject());
+		Map<String, ElementiStanza> lista = Giocatore.instanceOf().getInventario();
+		return lista.entrySet().stream().anyMatch(x -> x == m.getWinningObject());
 	}
 
 }

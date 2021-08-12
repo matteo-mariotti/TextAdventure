@@ -1,24 +1,24 @@
 package it.uniroma1.textadv.characters;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import it.uniroma1.textadv.ElementiStanza;
 
 public abstract class Personaggio extends Entita{
 
-	private List<ElementiStanza> inventario = new ArrayList<>();
+	private Map<String, ElementiStanza> inventario = new HashMap<>();
 	
 	public Personaggio(String nome) {
 		super(nome);
 	}
 	
-	public List<ElementiStanza> getInventario(){
+	public Map<String, ElementiStanza> getInventario(){
 		return inventario;
 	}
 	
 	public void addOggetto(ElementiStanza ogg) {
-		inventario.add(ogg);
+		inventario.put(ogg.getNome(), ogg);
 	}
 	
 	}

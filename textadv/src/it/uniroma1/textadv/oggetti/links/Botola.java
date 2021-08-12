@@ -8,12 +8,4 @@ public class Botola extends Link{
 		super(nome, stanzaPartenza, stanzaDestinazione);
 	}
 
-	@Override
-	public void open() {
-		if (super.status())
-			System.out.println("La botola è ancora chiusa");
-		else
-			System.out.println("La botola è già aperta");
-	}
-
 }

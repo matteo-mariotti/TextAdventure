@@ -327,7 +327,7 @@ public class Mondo {
 		Map<String, Link> links = new HashMap<>();
 		for (String s : mappaLink.keySet()) {
 			List<String> dati = mappaLink.get(s);
-			Class<?> classe = Class.forName("it.uniroma1.textadv.links." + dati.get(0));
+			Class<?> classe = Class.forName("it.uniroma1.textadv.oggetti.links." + dati.get(0));
 			// Controllo se le stanze sono valide
 			if (mappaStanze.keySet().contains(dati.get(1)) && mappaStanze.keySet().contains(dati.get(2))) {
 				Constructor<?> costruttore = classe.getConstructor(String.class, Room.class, Room.class);

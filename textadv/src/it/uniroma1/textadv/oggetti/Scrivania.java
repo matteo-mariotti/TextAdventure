@@ -14,9 +14,16 @@ public class Scrivania extends OggettoCheInteragisce implements Openable, Box {
 		super(nome);
 	}
 
+	@Override
 	public void open() {
 		bOpen = true;
 		System.out.println("La scrivania è ora aperta");
+	}
+	
+	@Override
+	public void open(Oggetto ogg) {
+		System.out.println("Non hai bisogno di un oggetto per aprire " + super.getNome());
+		open();
 	}
 
 	public String toString() {
@@ -38,9 +45,8 @@ public class Scrivania extends OggettoCheInteragisce implements Openable, Box {
 	}
 
 	@Override
-	public void azione() {
-		// TODO Auto-generated method stub
-		
+	public boolean unlock(Oggetto ogg) {
+		return true;
 	}
 
 }

@@ -10,10 +10,6 @@ public class Chiave extends OggettoCheInteragisce{
 		super(nome);
 	}
 
-	@Override
-	public void azione() {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 }

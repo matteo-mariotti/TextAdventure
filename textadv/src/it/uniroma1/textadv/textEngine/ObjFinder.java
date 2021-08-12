@@ -2,7 +2,6 @@ package it.uniroma1.textadv.textEngine;
 
 import it.uniroma1.textadv.ElementiStanza;
 import it.uniroma1.textadv.characters.Giocatore;
-import it.uniroma1.textadv.rooms.Room;
 
 public class ObjFinder {
 
@@ -13,4 +12,6 @@ public class ObjFinder {
 		throw new OggettoInesistenteException();
 	}
 
+	
+	
 }

@@ -12,6 +12,4 @@ public abstract class Oggetto extends ElementiStanza {
 		return nome;
 	}
 	
-	
-	
 }

@@ -24,4 +24,9 @@ public abstract class ElementiStanza {
 		return toString();
 	}
 	
+	public void azione() {
+		System.out.println("Azione da svolgere");
+	}
+	
 }
+
