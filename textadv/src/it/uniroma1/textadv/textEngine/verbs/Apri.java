@@ -48,7 +48,6 @@ public class Apri extends Verbo {
 			if (ogg instanceof Openable) {
 				Openable o = (Openable) ogg;
 				o.open(key);
-				System.out.println("Ci sono arrivato");
 			} else {
 				System.out.println("Non puoi aprire " + oggettoDaAprire);
 			}

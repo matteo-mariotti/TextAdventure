@@ -112,11 +112,16 @@ public class Room {
 	
 	
 
-	public ElementiStanza getElemento(String nomeElemento) throws OggettoInesistenteException {
+	public ElementiStanza getElemento(String nomeElemento) throws OggettoInesistenteException, PagamentoNecessarioException {
 		if (elementi.containsKey(nomeElemento)) {
 			ElementiStanza e =elementi.get(nomeElemento);
-			elementi.remove(nomeElemento);
+			if (e.getOwner() == null) {
+				elementi.remove(nomeElemento);
 			return e;}
+			else {
+				throw new PagamentoNecessarioException(e.getOwner());
+			}
+		}
 		throw new OggettoInesistenteException();
 	}
 	
@@ -139,7 +144,7 @@ public class Room {
 			throw new CollegamentoInesistenteException();
 		return l.get(0);
 	}
-
+	
 	private Room getDirection(LinkTuple link) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption {
 		if (link == null)
 			throw new DirezioneNonConsentitaException();	

@@ -6,4 +6,8 @@ public class Pozzo extends Oggetto {
 		super(nome);
 	}
 
+	public void riempi(Secchio sec) {
+		sec.fill();
+	}
+	
 }

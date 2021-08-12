@@ -120,10 +120,10 @@ public class Mondo {
 		m.initialize(m, mappaOggetti, mappaStanze, mappaLink, mappaPersonaggi, m);
 		m.player.setRoom(m.listaStanze.get(m.startingRoom));
 //		System.out.println(m.player.getStanza());
-		for (String s : m.listaStanze.keySet())
+		/*for (String s : m.listaStanze.keySet())
 		{
 			System.out.println(m.listaStanze.get(s));
-		}
+		}*/
 		return m;
 	}
 

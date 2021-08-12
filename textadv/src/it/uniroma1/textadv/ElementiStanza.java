@@ -1,9 +1,13 @@
 package it.uniroma1.textadv;
 
+import it.uniroma1.textadv.characters.Entita;
+
 public abstract class ElementiStanza {
 
 	protected String nome;
+	private Entita owner;
 
+	
 	public ElementiStanza(String nome) {
 		this.nome = nome;
 	}
@@ -28,5 +32,13 @@ public abstract class ElementiStanza {
 		System.out.println("Azione da svolgere");
 	}
 	
+	
+	public void setOwner(Entita owner) {
+		this.owner = owner;
+	}
+	
+	public Entita getOwner() {
+		return owner;
+	}
 }
 

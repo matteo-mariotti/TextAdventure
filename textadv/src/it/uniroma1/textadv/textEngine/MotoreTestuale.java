@@ -16,7 +16,6 @@ public class MotoreTestuale {
 		s = s.replaceAll(" il | lo | la | i | gli | le | in ", " ");
 		String[] comando = s.split(" con | su | a | da | nella ");
 		String[] info = comando[0].split(" ");
-		Arrays.stream(info).forEach(x->System.out.println(x));
 		String verbo = info[0].substring(0, 1).toUpperCase() + info[0].substring(1);
 		ArrayList<String> parsed = new ArrayList<String>();
 		parsed.addAll(List.of(verbo));

@@ -29,7 +29,6 @@ public class Gioco {
 				m.invoke(v, comando.get(1));
 			} else if (comando.size() == 3) {
 				// Trovo il primo parametro
-				System.out.println("Comando con tre parametri");
 				m = classe.getMethod("esegui", String.class, String.class);
 				m.invoke(v, comando.get(1), comando.get(2));
 			}
