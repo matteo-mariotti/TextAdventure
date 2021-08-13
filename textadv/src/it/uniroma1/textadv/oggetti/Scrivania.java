@@ -1,6 +1,7 @@
 package it.uniroma1.textadv.oggetti;
 
 import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
 public class Scrivania extends OggettoCheInteragisce implements Openable, Box {
 
@@ -33,15 +34,17 @@ public class Scrivania extends OggettoCheInteragisce implements Openable, Box {
 	}
 
 	@Override
-	public ElementiStanza getContenuto(String obj) {
+	public ElementiStanza getContenuto(String obj) throws OggettoInesistenteException{
 		if (!(bOpen))
 			return null; //TODO Eccezione perchè la scrivania è chiusa
-		if (obj.equals(super.interazione.getNome())) {
+		if (super.interazione == null)
+			throw new OggettoInesistenteException(); //TODO Lancia una eccezione perche non contiene l'elemento
+		else if (obj.equals(super.interazione.getNome())) {
 			ElementiStanza o = super.interazione;
 			super.interazione = null;
 			return o;
 		} else
-			return null; //TODO Lancia una eccezione perche non contiene l'elemento
+			throw new OggettoInesistenteException(); //TODO Lancia una eccezione perche non contiene l'elemento
 	}
 
 	@Override

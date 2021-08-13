@@ -1,6 +1,8 @@
 package it.uniroma1.textadv.oggetti.links;
 
+import it.uniroma1.textadv.oggetti.Oggetto;
 import it.uniroma1.textadv.rooms.Room;
+import it.uniroma1.textadv.textEngine.verbs.Prendi;
 
 public class Teletrasporto extends Link {
 
@@ -9,9 +11,10 @@ public class Teletrasporto extends Link {
 	}
 
 	@Override
-	public void open() {
-		// TODO Auto-generated method stub
-		
+	public void open(Oggetto chiave) {
+		super.open(chiave);
+		new Prendi().esegui(this.getNome());
 	}
+
 
 }

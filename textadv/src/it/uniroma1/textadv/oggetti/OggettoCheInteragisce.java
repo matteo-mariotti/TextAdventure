@@ -19,6 +19,11 @@ public abstract class OggettoCheInteragisce extends Oggetto {
 		interazione = ogg;
 	}
 	
+	public boolean getInterazione() {
+		if (interazione == null)
+			return false;
+		return true;
+	}
 	
 
 }
