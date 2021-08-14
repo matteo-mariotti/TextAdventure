@@ -22,6 +22,10 @@ public class Secchio extends  Oggetto implements Usable {
 		System.out.println("Devi indicare su cosa usare il secchio");
 	}
 
+	public void empty() {
+		pieno = false;
+	}
+	
 	@Override
 	public void use(ElementiStanza e) {
 		if (e instanceof Pozzo)

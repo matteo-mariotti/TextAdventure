@@ -8,6 +8,7 @@ public class Pozzo extends Oggetto {
 
 	public void riempi(Secchio sec) {
 		sec.fill();
+		System.out.println("" + sec + "è stato riempito");
 	}
 	
 }

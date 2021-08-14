@@ -10,7 +10,7 @@ public class Entra extends Verbo{
 	
 	public void esegui(String stanza) {
 		try {
-			Room l = Giocatore.instanceOf().getStanza().getDestRoom(stanza.strip());
+			Room l = Giocatore.instanceOf().getStanza().getStanzaconnessa(stanza.strip());
 			Giocatore.instanceOf().setRoom(l);
 			System.out.println("Ti trovi ora in: " + l.getNome());
 		} catch (ChiaveNecessariaExeption e2) {
@@ -18,8 +18,17 @@ public class Entra extends Verbo{
 			System.out.println("Ti serve una chiave per aprire questa stanza");
 		
 		} catch (CollegamentoInesistenteException | DirezioneNonConsentitaException e1) {
-		
-			System.out.println("Non esiste questa stanza!");
+			
+			Room l;
+			try {
+				l = Giocatore.instanceOf().getStanza().getDestRoom(stanza);
+				Giocatore.instanceOf().setRoom(l);
+				System.out.println("Ti trovi ora in: " + l.getNome());
+			} catch (CollegamentoInesistenteException | DirezioneNonConsentitaException | ChiaveNecessariaExeption e) {
+				System.out.println("Non esiste questa stanza/link!");
+			}
+			
+			
 
 		}
 	}

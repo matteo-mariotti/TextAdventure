@@ -5,7 +5,7 @@ import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
 public interface Box {
 
-	ElementiStanza getContenuto(String obj) throws OggettoInesistenteException;
+	ElementiStanza getContenuto(String obj) throws OggettoInesistenteException, ImpossibileOttenereOggetto;
 	
 	
 }

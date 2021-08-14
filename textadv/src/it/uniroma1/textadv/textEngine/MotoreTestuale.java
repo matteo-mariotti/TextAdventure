@@ -13,8 +13,8 @@ public class MotoreTestuale {
 	}
 
 	private static List<String> parser(String s){
-		s = s.replaceAll(" il | lo | la | i | gli | le | in ", " ");
-		String[] comando = s.split(" con | su | a | da | nella | nel ");
+		s = s.replaceAll(" il | lo | la | i | gli | le ", " ");
+		String[] comando = s.split(" con | su | a | da | nella | nel | in ");
 		String[] info = comando[0].split(" ");
 		String verbo = info[0].substring(0, 1).toUpperCase() + info[0].substring(1);
 		ArrayList<String> parsed = new ArrayList<String>();

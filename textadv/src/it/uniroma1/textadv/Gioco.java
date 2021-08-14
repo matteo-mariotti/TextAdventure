@@ -16,8 +16,7 @@ public class Gioco {
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		while (!vittoria(mondoDiGioco)) {
 			List<String> comando = MotoreTestuale.leggiComando();
-			System.out.println(comando);
-			Class<?> classe = Class.forName("it.uniroma1.textadv.textEngine.verbs." + comando.get(0));
+			Class<?> classe = Class.forName("it.uniroma1.textadv.textEngine.verbs." + comando.get(0)).asSubclass(Verbo.class);
 			Constructor<?> costruttore = classe.getConstructor();
 			Verbo v = (Verbo) costruttore.newInstance();
 			Method m;
@@ -28,53 +27,12 @@ public class Gioco {
 				m = classe.getMethod("esegui", String.class);
 				m.invoke(v, comando.get(1));
 			} else if (comando.size() == 3) {
-				// Trovo il primo parametro
 				m = classe.getMethod("esegui", String.class, String.class);
 				m.invoke(v, comando.get(1), comando.get(2));
 			}
-
 		}
+		System.out.println("Bravo!! Hai vinto!!!");
 	}
-/*
-	private class TuplaDati{
-		
-		Object o;
-		Class<?> classe;
-		
-		public TuplaDati(Object o, Class<?> classe) {
-			this.o = o;
-			this.classe = classe;
-		}
-		
-		public Class<?> getClasse(){
-			return classe;
-		}
-		
-		public Object getElemento() {
-			return o;
-		}
-		
-	}
-	
-	private TuplaDati getArg(String instr) {
-		Oggetto ogg = Giocatore.instanceOf().getStanza().listaOggetti().get(instr.strip());
-		if (ogg == null) {
-			Entita e = Giocatore.instanceOf().getStanza().listaEntita().get(instr.strip());
-			if (e == null) {
-				Room l = Giocatore.instanceOf().getStanza().getLink(instr);
-				if (l != null)
-					return new TuplaDati(l, Room.class);
-				else
-					return null; //Devo lanciare una eccezione
-			}else
-				return new TuplaDati(e, Entita.class);
-		}
-		return new TuplaDati(ogg, Oggetto.class);
-	}
-	*/
-	/*private Class<?> obtainClass(String s) {
-		
-	}*/
 	
 	private boolean vittoria(Mondo m) {
 		Map<String, ElementiStanza> lista = Giocatore.instanceOf().getInventario();

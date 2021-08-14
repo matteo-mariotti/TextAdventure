@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import it.uniroma1.textadv.ElementiStanza;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.Box;
+import it.uniroma1.textadv.oggetti.ImpossibileOttenereOggetto;
 import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
 import it.uniroma1.textadv.rooms.CollegamentoInesistenteException;
 import it.uniroma1.textadv.rooms.DirezioneNonConsentitaException;
@@ -16,7 +17,7 @@ import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
 public class Prendi extends Verbo {
 
-	public void esegui(String oggetto, String oggettoContenitore) throws OggettoInesistenteException {
+	public void esegui(String oggetto, String oggettoContenitore) throws OggettoInesistenteException, ImpossibileOttenereOggetto {
 		Object ogg2 = ObjFinder.getArg(oggettoContenitore);
 		if (ogg2 instanceof Box) {
 			Box b = (Box) ogg2;
@@ -55,6 +56,8 @@ public class Prendi extends Verbo {
 						if (i != l.size()-1)
 							continue;
 						System.out.println("Non esiste nè un oggetto nè un link che si chiama così nella stanza");
+					} catch (ImpossibileOttenereOggetto e2) {
+						System.out.println("Non puoi ottenere l'oggetto in questo modo");
 					}
 
 				}

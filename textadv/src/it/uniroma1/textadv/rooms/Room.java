@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import it.uniroma1.textadv.ElementiStanza;
-import it.uniroma1.textadv.characters.Entita;
-import it.uniroma1.textadv.oggetti.Oggetto;
 import it.uniroma1.textadv.oggetti.links.Link;
 import it.uniroma1.textadv.textEngine.Direzione;
 import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
@@ -126,20 +125,24 @@ public class Room {
 	}
 	
 	public Room getDestRoom(String nomeLink) throws CollegamentoInesistenteException, DirezioneNonConsentitaException, ChiaveNecessariaExeption {
-		return getDirection(getLinkTuple(nomeLink));
+		return getDirection(getLinkTuple(nomeLink, x->x.getLink()!=null, x -> x.getNome().equals(nomeLink)));
+	}
+	
+	public Room getStanzaconnessa(String nomeStanza) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption, CollegamentoInesistenteException {
+		return getDirection(getLinkTuple(nomeStanza, x->x.getRoom()!=null, x -> x.getNomeStanza().equals(nomeStanza)));
 	}
 	
 	public Link getLink(String s) throws CollegamentoInesistenteException {
-		return getLinkTuple(s).getLink(); 
+		return getLinkTuple(s, x->x.getLink()!=null, x -> x.getNome().equals(s)).getLink(); 
 	}
 	
-	private LinkTuple getLinkTuple(String s) throws CollegamentoInesistenteException {
+	private LinkTuple getLinkTuple(String s, Predicate<LinkTuple> p, Predicate<LinkTuple> p1) throws CollegamentoInesistenteException {
 		List<LinkTuple> l =  new ArrayList<>();
 		l.add(linkE);
 		l.add(linkN);
 		l.add(linkS);
 		l.add(linkW);
-		l  = l.stream().filter(x->x!=null).filter(x->x.getLink()!=null).filter(x -> x.getNome().equals(s)).collect(Collectors.toList());
+		l  = l.stream().filter(x->x!=null).filter(p).filter(p1).collect(Collectors.toList());
 		if (l.isEmpty())
 			throw new CollegamentoInesistenteException();
 		return l.get(0);
