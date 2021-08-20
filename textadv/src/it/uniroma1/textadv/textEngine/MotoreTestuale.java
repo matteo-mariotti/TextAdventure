@@ -12,7 +12,7 @@ public class MotoreTestuale {
 		return parser(in.nextLine());
 	}
 
-	private static List<String> parser(String s){
+	public static List<String> parser(String s){
 		s = s.replaceAll(" il | lo | la | i | gli | le ", " ");
 		String[] comando = s.split(" con | su | a | da | nella | nel | in ");
 		String[] info = comando[0].split(" ");

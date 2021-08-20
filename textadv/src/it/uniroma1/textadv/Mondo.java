@@ -255,7 +255,7 @@ public class Mondo {
 					} else {
 						e = creaPersonaggio(dati.get(2), mappaPersonaggi, oggetti, personaggi);
 					}
-					g.addArguments(e, oggetti.get(dati.get(1)));
+					g.addArguments(e, (Tesoro) oggetti.get(dati.get(1)));
 
 				}
 			} else {
@@ -310,7 +310,7 @@ public class Mondo {
 				Constructor<?> costruttore = classe.getConstructor(String.class);
 				object = (Oggetto) costruttore.newInstance(nomeOggetto);
 				oggetti.put(nomeOggetto, object);
-				if (dati.get(0).equals("Tesoro"))
+				if (dati.get(0).equals("Tesoro")) 
 					// TODO Eccezione se esiste già un oggetto vincente
 					m.oggettoVittoria = (Tesoro) object;
 			}

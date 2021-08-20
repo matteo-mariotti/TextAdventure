@@ -4,7 +4,7 @@ import it.uniroma1.textadv.ElementiStanza;
 
 public interface Usable {
 
-	void use();
+	String use();
 	
-	void use(ElementiStanza e);
+	String use(ElementiStanza e);
 }

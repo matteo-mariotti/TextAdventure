@@ -6,7 +6,7 @@ public abstract class Animale extends Entita {
 		super(nome);
 	}
 	
-	public abstract void accarezza();
+	public abstract String accarezza();
 	
 }
 	

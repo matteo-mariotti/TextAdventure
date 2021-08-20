@@ -2,23 +2,26 @@ package it.uniroma1.textadv.textEngine.verbs;
 
 import it.uniroma1.textadv.ElementiStanza;
 import it.uniroma1.textadv.characters.Payable;
+import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 import it.uniroma1.textadv.rooms.PagamentoNecessarioException;
 import it.uniroma1.textadv.textEngine.ObjFinder;
-import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
-public class Dai extends Verbo {
+public class Dai extends Verbo implements VerboBinario{
 
-	public void esegui(String elemento, String dest) throws OggettoInesistenteException {
-		ElementiStanza e = ObjFinder.getArg(dest);
-		if (e instanceof Payable) {
-			try {
-				((Payable) e).pagamento(elemento);
-			} catch (OggettoInesistenteException | PagamentoNecessarioException e1) {
-				e1.printStackTrace();
-			}
-		} else {
-			System.out.println("Non puoi pagare " + dest);
+	
+	@Override
+	public String esegui(String elemento, String dest){
+		try {
+			ElementiStanza e = ObjFinder.getArg(dest);
+			if (e instanceof Payable)
+				return ((Payable) e).pagamento(elemento);
+		return "Non puoi pagare " + dest;
+		}	catch (ElementoInesistenteException e2) {
+			return Verbo.NON_TROVATO;
+		} catch (PagamentoNecessarioException e1) {
+			return "Devi pagare " + e1.getNomeOwner() + " correttamente per prendere questo oggetto";
 		}
+
 
 	}
 

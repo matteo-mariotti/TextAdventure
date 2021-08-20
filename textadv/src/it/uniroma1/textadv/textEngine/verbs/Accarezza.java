@@ -1,20 +1,24 @@
 package it.uniroma1.textadv.textEngine.verbs;
 
+import it.uniroma1.textadv.ElementiStanza;
 import it.uniroma1.textadv.characters.Animale;
+import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 import it.uniroma1.textadv.textEngine.ObjFinder;
-import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
-public class Accarezza extends Verbo{
+public class Accarezza extends Verbo implements VerboUnitario {
 
-	public void esegui(String entita) throws OggettoInesistenteException {
-		Object ent = ObjFinder.getArg(entita);
-		if (ent instanceof Animale) {
-			Animale a = (Animale) ent;
-			a.accarezza();
-		}else
-		{
-			System.out.println("Non puoi accarezzare " + entita + "!!!");
+	@Override
+	public String esegui(String entita) {
+		try {
+			ElementiStanza ent = ObjFinder.getArg(entita);
+			if (ent instanceof Animale) {
+				Animale a = (Animale) ent;
+				return a.accarezza();
+			}
+			return "Non puoi accarezzare " + entita + "!!!";
+		} catch (ElementoInesistenteException e) {
+			return Verbo.NON_TROVATO;
 		}
 	}
-	
+
 }

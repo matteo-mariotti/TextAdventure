@@ -12,7 +12,7 @@ public class Test {
 	public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException{
 		Gioco g = new Gioco();
 		Mondo m = Mondo.fromFile(Paths.get("minizak.game"));
-		g.play(m);
+		g.play(m, Paths.get("minizak.ff"));
 		
 
 	}

@@ -6,9 +6,9 @@ public class Pozzo extends Oggetto {
 		super(nome);
 	}
 
-	public void riempi(Secchio sec) {
+	public String riempi(Secchio sec) {
 		sec.fill();
-		System.out.println("" + sec + "è stato riempito");
+		return "" + sec + "è stato riempito";
 	}
 	
 }

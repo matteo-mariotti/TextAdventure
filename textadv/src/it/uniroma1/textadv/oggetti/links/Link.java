@@ -38,15 +38,15 @@ public abstract class Link extends Oggetto implements Openable {
 		;
 	}
 
-	public void open() {
+	public String open() {
 		if (!(bChiuso)) 
-			System.out.println("" + getNome() + " era già aperto");
+			return "" + getNome() + " era già aperto";
 		else if(chiave == null)
 		{
 			bChiuso = false;
-			System.out.println("" + getNome() + " è stato aperto");}
+			return "" + getNome() + " è stato aperto";}
 		else {
-			System.out.println("" + getNome() + " è ancora chiuso");
+			return "" + getNome() + " è ancora chiuso";
 		}
 	}
 
@@ -55,21 +55,15 @@ public abstract class Link extends Oggetto implements Openable {
 		bChiuso = true;
 	}
 	
+	@Override
 	public boolean unlock(Oggetto chiave) {
 		if (this.chiave == chiave)
 		{
 			this.chiave = null;
-			return true;
-		}else if (chiave == null) {
 			bChiuso = false;
-			return true;}
+			return true;
+		}
 		return false;
-	}
-	public void open(Oggetto chiave) {
-		if (unlock(chiave))
-			open();
-		else
-			System.out.println("L'oggetto fornito non è in grado di aprire " + nome);
 	}
 
 	public void move() {

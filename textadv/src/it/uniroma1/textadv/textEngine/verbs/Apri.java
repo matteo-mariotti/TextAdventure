@@ -4,54 +4,40 @@ import it.uniroma1.textadv.ElementiStanza;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.Oggetto;
 import it.uniroma1.textadv.oggetti.Openable;
-import it.uniroma1.textadv.oggetti.links.Link;
-import it.uniroma1.textadv.rooms.CollegamentoInesistenteException;
+import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 import it.uniroma1.textadv.textEngine.ObjFinder;
-import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
-public class Apri extends Verbo {
+public class Apri extends Verbo implements VerboUnitario, VerboBinario {
 
-	public void esegui(String stringaInput) throws OggettoInesistenteException, CollegamentoInesistenteException {
-		try {
-			ElementiStanza ogg = ObjFinder.getArg(stringaInput);
-			if (ogg instanceof Openable) {
-				Openable o = (Openable) ogg;
-				o.open();
-			}
-		} catch (OggettoInesistenteException e) {
-			// Vedo se si tratta di un link
-			try {
-				Link l = Giocatore.instanceOf().getStanza().getLink(stringaInput);
-				if (l instanceof Openable) {
-					Openable o = (Openable) l;
-					o.open();
-				}
-			} catch (CollegamentoInesistenteException e1) {
-				System.out.println("Il collegamento che cerchi di aprire è inesistente");
-			}
-		}
+	private static String NOT_OPENABLE = " non è un oggetto apribile";
+	private static String NO_KEY = "Non possiedi la chiave che vuoi usare!!";
+
+	@Override
+	public String esegui(String stringaInput) {
+		return apri(stringaInput, null);
 	}
 
-	public void esegui(String oggettoDaAprire, String chiave) {
-		// TODO Eccezione se non possiedo l'oggetto nell'inventario
-		Oggetto key = (Oggetto) Giocatore.instanceOf().getInventario().get(chiave);
-		Object ogg = null;
+	private String apri(String elemento, Oggetto chiave) {
 		try {
-			ogg = ObjFinder.getArg(oggettoDaAprire);
-		} catch (OggettoInesistenteException e) {
-			try {
-				ogg = Giocatore.instanceOf().getStanza().getLink(oggettoDaAprire);
-			} catch (CollegamentoInesistenteException e1) {
-				System.out.println("Il collegamento che cerchi di aprire è inesistente");
-			}
-		} finally {
+			ElementiStanza ogg = ObjFinder.getArg(elemento);
 			if (ogg instanceof Openable) {
 				Openable o = (Openable) ogg;
-				o.open(key);
-			} else {
-				System.out.println("Non puoi aprire " + oggettoDaAprire);
+				o.unlock(chiave);
+				return o.open();
 			}
+			return "" + elemento + NOT_OPENABLE;
+		} catch (ElementoInesistenteException e) {
+			return Verbo.NON_TROVATO;
+
 		}
 
+	}
+
+	@Override
+	public String esegui(String oggettoDaAprire, String chiave) {
+		Oggetto key = (Oggetto) Giocatore.instanceOf().getInventario().get(chiave);
+		if (key == null)
+			return NO_KEY;
+		return apri(oggettoDaAprire, key);
 	}
 }

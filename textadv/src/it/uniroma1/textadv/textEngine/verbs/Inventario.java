@@ -1,14 +1,16 @@
 package it.uniroma1.textadv.textEngine.verbs;
 
+import java.util.stream.Collectors;
+
 import it.uniroma1.textadv.characters.Giocatore;
 
 public class Inventario extends Verbo {
 
-	public void esegui() {
+	@Override
+	public String esegui() {
 		if (Giocatore.instanceOf().getInventario().isEmpty())
-			System.out.println("Inventario vuoto");
-		else
-			Giocatore.instanceOf().getInventario().values().stream().forEach(x -> System.out.println(x));
+			return "Inventario vuoto";
+		return Giocatore.instanceOf().getInventario().values().stream().map(x -> x.toString()).collect(Collectors.joining("\n"));
 	}
 
 }

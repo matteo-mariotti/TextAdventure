@@ -9,14 +9,15 @@ public class Martello extends Oggetto implements Usable {
 	}
 
 	@Override
-	public void use() {
-		System.out.println("Devi indicare su cosa usare il martello");
+	public String use() {
+		return "Devi indicare su cosa usare il martello";
 	}
 
 	@Override
-	public void use(ElementiStanza e) {
+	public String use(ElementiStanza e) {
 		if (e instanceof Breakable)
-			((Breakable) e).rompi(this);
+			return ((Breakable) e).rompi(this);
+		return "Non puoi usare il martello su " + e.getNome();
 	}
 	
 	

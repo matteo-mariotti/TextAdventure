@@ -11,5 +11,9 @@ public abstract class Entita extends ElementiStanza {
 		super(nome);
 	}
 	
+	public String speak() {
+		return "Ciao, io sono " + super.getNome();
+	}
+	
 }
 

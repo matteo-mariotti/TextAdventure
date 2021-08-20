@@ -41,11 +41,11 @@ public class Room {
 		}
 
 		public boolean locked() {
-			if (l!=null)
+			if (l != null)
 				return l.status();
 			return false;
 		}
-		
+
 		public String toString() {
 			return l == null ? stanza.getNome() : l.getNome();
 		}
@@ -95,67 +95,70 @@ public class Room {
 	public void linkW(LinkTuple link) {
 		linkW = link;
 	}
-	
+
 	public void linkE(LinkTuple link) {
 		linkE = link;
 	}
-	
+
 	public Room getDestRoom(Direzione d) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption {
-		return switch(d) {
+		return switch (d) {
 		case NORD, N -> getDirection(linkN);
 		case SUD, S -> getDirection(linkS);
 		case WEST, O, OVEST, W -> getDirection(linkW);
 		case EAST, EST, E -> getDirection(linkE);
 		};
 	}
-	
-	
 
-	public ElementiStanza getElemento(String nomeElemento) throws OggettoInesistenteException, PagamentoNecessarioException {
+	public ElementiStanza getElemento(String nomeElemento)
+			throws ElementoInesistenteException, PagamentoNecessarioException {
 		if (elementi.containsKey(nomeElemento)) {
-			ElementiStanza e =elementi.get(nomeElemento);
+			ElementiStanza e = elementi.get(nomeElemento);
 			if (e.getOwner() == null) {
 				elementi.remove(nomeElemento);
-			return e;}
-			else {
+				return e;
+			} else {
 				throw new PagamentoNecessarioException(e.getOwner());
 			}
 		}
-		throw new OggettoInesistenteException();
+		throw new ElementoInesistenteException();
 	}
-	
-	public Room getDestRoom(String nomeLink) throws CollegamentoInesistenteException, DirezioneNonConsentitaException, ChiaveNecessariaExeption {
-		return getDirection(getLinkTuple(nomeLink, x->x.getLink()!=null, x -> x.getNome().equals(nomeLink)));
+
+	// Fornisce la Room corrispondente al nome della stanza/link passato in input
+	public Room getDestRoom(String nomeLinkStanza)
+			throws ElementoInesistenteException, DirezioneNonConsentitaException, ChiaveNecessariaExeption {
+		try {
+			return getDirection(
+					getLinkTuple(nomeLinkStanza, x -> x.getLink() != null, x -> x.getNome().equals(nomeLinkStanza)));
+		} catch (ElementoInesistenteException | DirezioneNonConsentitaException e) {
+			return getDirection(getLinkTuple(nomeLinkStanza, x -> x.getRoom() != null,
+					x -> x.getNomeStanza().equals(nomeLinkStanza)));
+		}
 	}
-	
-	public Room getStanzaconnessa(String nomeStanza) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption, CollegamentoInesistenteException {
-		return getDirection(getLinkTuple(nomeStanza, x->x.getRoom()!=null, x -> x.getNomeStanza().equals(nomeStanza)));
+
+	public Link getLink(String s) throws ElementoInesistenteException {
+		return getLinkTuple(s, x -> x.getLink() != null, x -> x.getNome().equals(s)).getLink();
 	}
-	
-	public Link getLink(String s) throws CollegamentoInesistenteException {
-		return getLinkTuple(s, x->x.getLink()!=null, x -> x.getNome().equals(s)).getLink(); 
-	}
-	
-	private LinkTuple getLinkTuple(String s, Predicate<LinkTuple> p, Predicate<LinkTuple> p1) throws CollegamentoInesistenteException {
-		List<LinkTuple> l =  new ArrayList<>();
+
+	private LinkTuple getLinkTuple(String s, Predicate<LinkTuple> p, Predicate<LinkTuple> p1)
+			throws ElementoInesistenteException {
+		List<LinkTuple> l = new ArrayList<>();
 		l.add(linkE);
 		l.add(linkN);
 		l.add(linkS);
 		l.add(linkW);
-		l  = l.stream().filter(x->x!=null).filter(p).filter(p1).collect(Collectors.toList());
+		l = l.stream().filter(x -> x != null).filter(p).filter(p1).collect(Collectors.toList());
 		if (l.isEmpty())
-			throw new CollegamentoInesistenteException();
+			throw new ElementoInesistenteException();
 		return l.get(0);
 	}
-	
+
 	private Room getDirection(LinkTuple link) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption {
 		if (link == null)
-			throw new DirezioneNonConsentitaException();	
+			throw new DirezioneNonConsentitaException();
 		if (link.locked())
-			throw new ChiaveNecessariaExeption(); 
+			throw new ChiaveNecessariaExeption();
 		return link.getRoom();
 	}
-	
 
 	public void addElementi(ElementiStanza ogg) {
 		elementi.put(ogg.getNome(), ogg);

@@ -1,6 +1,8 @@
 package it.uniroma1.textadv.oggetti;
 
 import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
+import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
 public class Cassetto extends OggettoCheInteragisce implements Openable, Box{
@@ -22,31 +24,31 @@ public class Cassetto extends OggettoCheInteragisce implements Openable, Box{
 	
 
 	@Override
-	public ElementiStanza getContenuto(String obj) throws OggettoInesistenteException, ImpossibileOttenereOggetto{
+	public ElementiStanza getContenuto(String obj) throws  ChiaveNecessariaExeption, ImpossibileOttenereOggetto{
 		if (!(bOpen))
-			throw new ImpossibileOttenereOggetto();//TODO Eccezione perchè il camino è acceso
+			throw new ChiaveNecessariaExeption();//TODO Eccezione perchè il cassetto è chiuso
 		if (super.interazione == null)
-			throw new OggettoInesistenteException(); //TODO Lancia una eccezione perche non contiene l'elemento
+			throw new ImpossibileOttenereOggetto(); //TODO Lancia una eccezione perche non contiene l'elemento
 		else if (obj.equals(super.interazione.getNome())) {
 			ElementiStanza o = super.interazione;
 			super.interazione = null;
 			return o;
 		} else
-			throw new OggettoInesistenteException(); //TODO Lancia una eccezione perche non contiene l'elemento
+			throw new ImpossibileOttenereOggetto(); //TODO Lancia una eccezione perche non contiene l'elemento
 	}
 	
 
 	@Override
-	public void open() {
+	public String open() {
 		bOpen = true;
-		System.out.println("Il cassetto è ora aperto");
+		return "Il cassetto è ora aperto";
 	}
 	
-	@Override
-	public void open(Oggetto ogg) {
-		System.out.println("Non hai bisogno di un oggetto per aprire " + super.getNome());
+	/*@Override
+	public String open(Oggetto ogg) {
 		open();
-	}
+		return "Non hai bisogno di un oggetto per aprire " + super.getNome();
+	}*/
 
 	
 }

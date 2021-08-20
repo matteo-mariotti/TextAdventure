@@ -22,16 +22,21 @@ public class Venditore extends Personaggio implements Payable{
 		super(nome);
 	}
 
-	public void pagamento(String s) throws OggettoInesistenteException, PagamentoNecessarioException{
+	@Override
+	public String pagamento(String s) throws PagamentoNecessarioException{
 		ElementiStanza e = Giocatore.instanceOf().getInventario().get(s);
+		StringBuffer sb = new StringBuffer();
 		if (e instanceof Soldi) {
 			Giocatore.instanceOf().getInventario().remove(e.getNome());
 			for (String s1 : super.getInventario().keySet()) {
 				super.getInventario().get(s1).setOwner(null);
-				new Prendi().esegui(s1);
+				sb.append(new Prendi().esegui(s1));
 			}
 			super.getInventario().clear();
+			return sb.toString();
 		}
+		else
+			throw new PagamentoNecessarioException(this);
 	}
 	
 }

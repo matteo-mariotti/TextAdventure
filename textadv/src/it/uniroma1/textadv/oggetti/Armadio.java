@@ -1,6 +1,10 @@
 package it.uniroma1.textadv.oggetti;
 
+import java.util.Map;
+
 import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
+import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
 public class Armadio extends OggettoCheInteragisce implements Openable, Box{
@@ -17,17 +21,20 @@ public class Armadio extends OggettoCheInteragisce implements Openable, Box{
 	
 	
 	@Override
-	public void open() {
-		System.out.println("Ti serve un oggetto per aprire " + super.getNome());
+	public String open() {
+		if (bOpen)
+			return "" + super.getNome() + " è ora aperto";
+		return "Hai bisogno delle tronchesi per aprire l'armadio";
 	}
 	
-	@Override
-	public void open(Oggetto ogg) {
+	/*@Override
+	public String open(Oggetto ogg) {
 		if (ogg instanceof Tronchesi) {
 			bOpen = true;
-			System.out.println("" + super.getNome() + " è ora aperto");
+			return "" + super.getNome() + " è ora aperto";
 		}
-	}
+		return "Hai bisogno delle tronchesi per aprire l'armadio";
+	}*/
 
 
 	public String toString() {
@@ -37,23 +44,26 @@ public class Armadio extends OggettoCheInteragisce implements Openable, Box{
 	}
 	
 	@Override
-	public ElementiStanza getContenuto(String obj) throws OggettoInesistenteException {
+	public ElementiStanza getContenuto(String obj) throws ImpossibileOttenereOggetto, ChiaveNecessariaExeption {
 		if (!(bOpen))
-			return null; //TODO Eccezione perchè l'armadio è chiusa
+			throw new ChiaveNecessariaExeption();
 		if (super.interazione == null)
-			throw new OggettoInesistenteException(); //TODO Lancia una eccezione perche non contiene l'elemento
+			throw new ImpossibileOttenereOggetto(); //TODO Lancia una eccezione perche non contiene l'elemento
 
 		if (obj.equals(super.interazione.getNome())) {
 			ElementiStanza o = super.interazione;
 			super.interazione = null;
 			return o;
 		} else
-			throw new OggettoInesistenteException(); //TODO Lancia una eccezione perche non contiene l'elemento
+			throw new ImpossibileOttenereOggetto(); //TODO Lancia una eccezione perche non contiene l'elemento
 	}
 
 	@Override
 	public boolean unlock(Oggetto ogg) {
-		return true;
+		if (ogg instanceof Tronchesi) {
+			bOpen = true;
+			return true;
+		}return false;
 	}
 	
 }

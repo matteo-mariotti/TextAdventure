@@ -11,9 +11,10 @@ public class Teletrasporto extends Link {
 	}
 
 	@Override
-	public void open(Oggetto chiave) {
-		super.open(chiave);
-		new Prendi().esegui(this.getNome());
+	public String open() {
+		if (!(bChiuso))
+			return new Prendi().esegui(this.getNome());
+		return "Ti serve una chiave per usare il teletrasporto";
 	}
 
 

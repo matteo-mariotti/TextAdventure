@@ -9,9 +9,8 @@ public class Bus extends Link{
 	}
 
 	@Override
-	public void open() {
-		// TODO Auto-generated method stub
-		
+	public String open() {
+		return "";
 	}
 
 }

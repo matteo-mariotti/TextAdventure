@@ -9,16 +9,15 @@ public class Cacciavite extends Oggetto implements Usable{
 	}
 
 	@Override
-	public void use() {
-		System.out.println("Devi specificare su cosa usare il cacciavite");
+	public String use() {
+		return "Devi specificare su cosa usare il cacciavite";
 	}
 
 	@Override
-	public void use(ElementiStanza e) {
+	public String use(ElementiStanza e) {
 		if (e instanceof Unscrewable)
-			((Unscrewable) e).svita();
-		else
-			System.out.println("Non posso svitare " + e.getNome());
+			return ((Unscrewable) e).svita();
+		return "Non posso svitare " + e.getNome();
 	}
 
 }

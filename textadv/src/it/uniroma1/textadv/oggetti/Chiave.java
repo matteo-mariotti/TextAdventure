@@ -13,16 +13,18 @@ public class Chiave extends OggettoCheInteragisce implements Usable {
 	}
 
 	@Override
-	public void use() {
-		System.out.println("Devi indicare su cosa usare la chiave");
+	public String use() {
+		return "Devi indicare su cosa usare la chiave";
 	}
 
 	@Override
-	public void use(ElementiStanza e) {
-		if (e instanceof Openable)
-			((Openable) e).open(this);
+	public String use(ElementiStanza e) {
+		if (e instanceof Openable) {
+			((Openable) e).unlock(this);
+			return ((Openable) e).open();	
+		}
 		else
-			System.out.println("Non aprire svitare " + e.getNome());
+			return "Non puoi aprire " + e.getNome();
 
 	}
 

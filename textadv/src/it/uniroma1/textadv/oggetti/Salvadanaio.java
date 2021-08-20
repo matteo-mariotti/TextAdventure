@@ -15,15 +15,16 @@ public class Salvadanaio extends OggettoCheInteragisce implements Breakable{
 	}
 
 	@Override
-	public void rompi(Oggetto ogg) {
+	public String rompi(Oggetto ogg) {
 		if(bBroken){
-			System.out.println("Il salvadanaio è gia rotto");
+			return "Il salvadanaio è gia rotto";
 		}
 		else if (ogg instanceof Martello) {
-			System.out.println("Crash!! Hai rotto il salvadanaio");
 			bBroken = true;
 			Giocatore.instanceOf().getStanza().addElementi(super.interazione);	
+			return "Crash!! Hai rotto il salvadanaio";
 		}
+		return "Hai bisogno di un martello per rompere il salvadanaio";
 	}
 	
 	@Override
@@ -32,11 +33,11 @@ public class Salvadanaio extends OggettoCheInteragisce implements Breakable{
 	}
 
 	@Override
-	public void rompi() {
+	public String rompi() {
 		if (bBroken)
-			System.out.println("Il salvadanaio è già rotto");
+			return "Il salvadanaio è già rotto";
 		else
-			System.out.println("Per rompere il salvadanaio hai bisogno di un oggetto");
+			return "Per rompere il salvadanaio hai bisogno di un oggetto";
 	}
 	
 	

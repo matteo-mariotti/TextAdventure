@@ -18,8 +18,8 @@ public class Secchio extends  Oggetto implements Usable {
 		return pieno;
 	}
 	@Override
-	public void use() {
-		System.out.println("Devi indicare su cosa usare il secchio");
+	public String use() {
+		return "Devi indicare su cosa usare il secchio";
 	}
 
 	public void empty() {
@@ -27,11 +27,12 @@ public class Secchio extends  Oggetto implements Usable {
 	}
 	
 	@Override
-	public void use(ElementiStanza e) {
+	public String use(ElementiStanza e) {
 		if (e instanceof Pozzo)
-			((Pozzo) e).riempi(this);
+			return ((Pozzo) e).riempi(this);
 		if (e instanceof Camino)
-			((Camino) e).spegni(this);
+			return ((Camino) e).spegni(this);
+		return "Non puoi usare il secchio su " + e.getNome();
 	}
 
 }

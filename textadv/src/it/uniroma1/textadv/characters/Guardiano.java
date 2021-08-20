@@ -12,14 +12,14 @@ import it.uniroma1.textadv.textEngine.verbs.Prendi;
 
 public class Guardiano extends Personaggio implements Payable{
 	
-	private Oggetto tesoroSegreto;
+	private Tesoro tesoroSegreto;
 	private Entita distrazione;
 	private boolean distracted = false;
 		
 	public Guardiano(String nome, Entita gattinoCalmante, Tesoro tesoro) {
 		super(nome);
 		distrazione = gattinoCalmante;
-		tesoroSegreto = tesoro;
+		super.addOggetto(tesoro);
 		tesoro.setOwner(this);
 	}
 	
@@ -40,20 +40,22 @@ public class Guardiano extends Personaggio implements Payable{
 		return null;
 	}
 	
-	public void addArguments(Entita ent, Oggetto tes) {
-		tesoroSegreto = tes;
+	public void addArguments(Entita ent, Tesoro tes) {
+		tes.setOwner(this);
+		super.addOggetto(tes);
 		distrazione = ent;
 	}
 	
-	public void pagamento(String s) throws OggettoInesistenteException, PagamentoNecessarioException{
+	public String pagamento(String s){
 		ElementiStanza e = Giocatore.instanceOf().getInventario().get(s);
 		if (e == distrazione) {
 			Giocatore.instanceOf().getInventario().remove(e.getNome());
-			for (String s1 : super.getInventario().keySet()) {
+			for (String s1 : super.getInventario().keySet())
 				super.getInventario().get(s1).setOwner(null);
-			}
 			super.getInventario().clear();
-		}
+			return "Zzzz....";
+		}else
+		return "Non puoi!!";
 	}
 	
 }
