@@ -1,6 +1,6 @@
 package it.uniroma1.textadv.oggetti;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 
 public class Martello extends Oggetto implements Usable {
 	
@@ -14,7 +14,7 @@ public class Martello extends Oggetto implements Usable {
 	}
 
 	@Override
-	public String use(ElementiStanza e) {
+	public String use(ElementoStanza e) {
 		if (e instanceof Breakable)
 			return ((Breakable) e).rompi(this);
 		return "Non puoi usare il martello su " + e.getNome();

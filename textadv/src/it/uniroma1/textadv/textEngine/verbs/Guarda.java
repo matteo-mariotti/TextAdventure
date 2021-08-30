@@ -1,15 +1,15 @@
 package it.uniroma1.textadv.textEngine.verbs;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 import it.uniroma1.textadv.textEngine.ObjFinder;
 import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 
-public class Guarda extends Verbo {
+public class Guarda extends Verbo implements VerboUnitario{
 
 	public String esegui(String elemento){
-		ElementiStanza ogg;
+		ElementoStanza ogg;
 		try {
 			ogg = ObjFinder.getArg(elemento);
 			return ogg.describe();

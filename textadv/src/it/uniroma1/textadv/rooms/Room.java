@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 import it.uniroma1.textadv.oggetti.links.Link;
 import it.uniroma1.textadv.textEngine.Direzione;
 import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
@@ -55,7 +55,7 @@ public class Room {
 
 	private String nomeStanza;
 	private String description;
-	private Map<String, ElementiStanza> elementi = new HashMap<>();
+	private Map<String, ElementoStanza> elementi = new HashMap<>();
 	private LinkTuple linkN;
 	private LinkTuple linkS;
 	private LinkTuple linkW;
@@ -109,10 +109,10 @@ public class Room {
 		};
 	}
 
-	public ElementiStanza getElemento(String nomeElemento)
+	public ElementoStanza getElemento(String nomeElemento)
 			throws ElementoInesistenteException, PagamentoNecessarioException {
 		if (elementi.containsKey(nomeElemento)) {
-			ElementiStanza e = elementi.get(nomeElemento);
+			ElementoStanza e = elementi.get(nomeElemento);
 			if (e.getOwner() == null) {
 				elementi.remove(nomeElemento);
 				return e;
@@ -160,7 +160,7 @@ public class Room {
 		return link.getRoom();
 	}
 
-	public void addElementi(ElementiStanza ogg) {
+	public void addElementi(ElementoStanza ogg) {
 		elementi.put(ogg.getNome(), ogg);
 	}
 
@@ -168,7 +168,7 @@ public class Room {
 		return toString();
 	}
 
-	public Map<String, ElementiStanza> listaElementi() {
+	public Map<String, ElementoStanza> listaElementi() {
 		return elementi;
 	}
 

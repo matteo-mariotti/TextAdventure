@@ -1,16 +1,18 @@
 package it.uniroma1.textadv.textEngine.verbs;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.Oggetto;
 import it.uniroma1.textadv.oggetti.Openable;
+import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
 import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 import it.uniroma1.textadv.textEngine.ObjFinder;
 
 public class Apri extends Verbo implements VerboUnitario, VerboBinario {
 
-	private static String NOT_OPENABLE = " non è un oggetto apribile";
-	private static String NO_KEY = "Non possiedi la chiave che vuoi usare!!";
+	private static final String NOT_OPENABLE = " non è un oggetto apribile";
+	private static final String NO_KEY = "Non possiedi la chiave che vuoi usare!!";
+	private static final String UNCORRECT_KEY = "Non stai usando la chiave corretta!";
 
 	@Override
 	public String esegui(String stringaInput) {
@@ -19,7 +21,7 @@ public class Apri extends Verbo implements VerboUnitario, VerboBinario {
 
 	private String apri(String elemento, Oggetto chiave) {
 		try {
-			ElementiStanza ogg = ObjFinder.getArg(elemento);
+			ElementoStanza ogg = ObjFinder.getArg(elemento);
 			if (ogg instanceof Openable) {
 				Openable o = (Openable) ogg;
 				o.unlock(chiave);
@@ -29,6 +31,8 @@ public class Apri extends Verbo implements VerboUnitario, VerboBinario {
 		} catch (ElementoInesistenteException e) {
 			return Verbo.NON_TROVATO;
 
+		} catch (ChiaveNecessariaExeption e) {
+			return UNCORRECT_KEY;
 		}
 
 	}

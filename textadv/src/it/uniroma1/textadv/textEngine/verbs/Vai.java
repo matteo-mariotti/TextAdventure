@@ -12,8 +12,7 @@ public class Vai extends Verbo {
 		String format = s.toUpperCase();
 		try {
 			Room r = Giocatore.instanceOf().getStanza().getDestRoom(Direzione.valueOf(format));
-			Giocatore.instanceOf().setRoom(r);
-			return "Ti trovi ora in: " + r.getNome();
+			return Giocatore.instanceOf().setRoom(r);
 		} catch (IllegalArgumentException | DirezioneNonConsentitaException e) {
 			return "La direzione inserita non è valida";
 		}catch (ChiaveNecessariaExeption e) {

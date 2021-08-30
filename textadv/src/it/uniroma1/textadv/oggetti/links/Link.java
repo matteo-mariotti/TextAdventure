@@ -3,6 +3,7 @@ package it.uniroma1.textadv.oggetti.links;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.Oggetto;
 import it.uniroma1.textadv.oggetti.Openable;
+import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
 import it.uniroma1.textadv.rooms.Room;
 
 public abstract class Link extends Oggetto implements Openable {
@@ -56,14 +57,14 @@ public abstract class Link extends Oggetto implements Openable {
 	}
 	
 	@Override
-	public boolean unlock(Oggetto chiave) {
+	public boolean unlock(Oggetto chiave) throws ChiaveNecessariaExeption {
 		if (this.chiave == chiave)
 		{
 			this.chiave = null;
 			bChiuso = false;
 			return true;
 		}
-		return false;
+		throw new ChiaveNecessariaExeption();
 	}
 
 	public void move() {

@@ -2,27 +2,61 @@ package it.uniroma1.textadv.characters;
 
 import it.uniroma1.textadv.rooms.Room;
 
-public class Giocatore extends Personaggio{
+/**
+ * Classe che modella il giocatore
+ * 
+ * @author matte
+ *
+ */
+public class Giocatore extends Personaggio {
 
+	/**
+	 * Riferimento statico all'unico giocatore esistente nel gioco
+	 */
 	private static Giocatore player;
-	private Room stanzaCorrente;	
-	
-	private Giocatore(String nome, Room stanza) {
-		super(nome);
-		stanzaCorrente = stanza;
+	/**
+	 * Stanza in cui si trova il giocatore attualmente
+	 */
+	private Room stanzaCorrente;
+
+	/**
+	 * Costruttore del giocatore
+	 * 
+	 * @param nome   Nome del giocatore
+	 * @param stanza Stanza in cui si trova inizialmente
+	 */
+	private Giocatore() {
+		super(null);
 	}
-	
+
+	/**
+	 * Metodo che permette di ottenere un riferimento al giocatore
+	 * 
+	 * @return Unica istanza del giocatore
+	 */
 	public static Giocatore instanceOf() {
 		if (player == null)
-			player = new Giocatore("", null);
+			player = new Giocatore();
 		return player;
-		}
+	}
 
+	/**
+	 * Metodo per ottenere la stanza in cui si trova il giocatore
+	 * 
+	 * @return Stanza corrente
+	 */
 	public Room getStanza() {
 		return stanzaCorrente;
 	}
-	
-	public void setRoom(Room stanza) {
+
+	/**
+	 * Metodo per impostare la stanza in cui si trova il giocatore
+	 * 
+	 * @param stanza
+	 * @return
+	 */
+	public String setRoom(Room stanza) {
 		stanzaCorrente = stanza;
+		return "Ti trovi ora in " + stanza;
 	}
 }

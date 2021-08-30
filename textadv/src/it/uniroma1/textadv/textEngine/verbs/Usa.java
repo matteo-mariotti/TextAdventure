@@ -1,6 +1,6 @@
 package it.uniroma1.textadv.textEngine.verbs;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.Oggetto;
 import it.uniroma1.textadv.oggetti.Openable;
@@ -16,9 +16,9 @@ import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 public class Usa extends Verbo {
 
 	public String esegui(String oggettoDaUsare, String oggettoDest) {
-		ElementiStanza ogg1 = (Oggetto) Giocatore.instanceOf().getInventario().get(oggettoDaUsare);
+		ElementoStanza ogg1 = (Oggetto) Giocatore.instanceOf().getInventario().get(oggettoDaUsare);
 		try {
-			ElementiStanza ogg = ObjFinder.getArg(oggettoDest);
+			ElementoStanza ogg = ObjFinder.getArg(oggettoDest);
 			if (ogg1 instanceof Usable)
 				return ((Usable) ogg1).use(ogg);
 			return "Non puoi usare questo oggetto";
@@ -37,8 +37,7 @@ public class Usa extends Verbo {
 	public String esegui(String linkDaUsare) {
 		try {
 			Room l = Giocatore.instanceOf().getStanza().getDestRoom(linkDaUsare);
-			Giocatore.instanceOf().setRoom(l);
-			return "Ti trovi ora in: " + l.getNome();
+			return Giocatore.instanceOf().setRoom(l);
 		} catch (ElementoInesistenteException | DirezioneNonConsentitaException | ChiaveNecessariaExeption e) {
 			return "Non esiste questa stanza/link!";
 

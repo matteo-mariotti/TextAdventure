@@ -1,5 +1,6 @@
 package it.uniroma1.textadv.oggetti;
 
+import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
 
 public class Vite extends OggettoCheInteragisce implements Unscrewable{
 
@@ -13,8 +14,12 @@ public class Vite extends OggettoCheInteragisce implements Unscrewable{
 	
 	@Override
 	public String svita() {
-		((Openable) super.interazione).unlock(this);
-		return "Vite svitata";
+		try {
+			((Openable) super.interazione).unlock(this);
+			return "Vite svitata";
+		} catch (ChiaveNecessariaExeption e) {
+			return "Non è stato possibile aprire " + super.interazione;
+		}
 	}
 
 	

@@ -3,10 +3,12 @@ package it.uniroma1.textadv;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
-import it.uniroma1.textadv.textEngine.Direzione;
-
+/**
+ * Classe di test del gioco
+ * @author matte
+ *
+ */
 public class Test {
 
 	public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException{

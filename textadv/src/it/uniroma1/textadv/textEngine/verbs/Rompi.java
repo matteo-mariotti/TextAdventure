@@ -1,7 +1,7 @@
 package it.uniroma1.textadv.textEngine.verbs;
 
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.Breakable;
 import it.uniroma1.textadv.oggetti.Oggetto;
@@ -16,13 +16,12 @@ public class Rompi extends Verbo {
 	 
 	private String rompi(String oggetto, Oggetto oggetto2) {
 			try {
-				ElementiStanza ogg = ObjFinder.getArg(oggetto);
+				ElementoStanza ogg = ObjFinder.getArg(oggetto);
 				if (ogg instanceof Breakable) {
-					Breakable o = (Breakable) ogg;
 					if (oggetto2 == null)
-						return o.rompi();
+						return ((Breakable) ogg).rompi();
 					else
-						return o.rompi(oggetto2);
+						return ((Breakable) ogg).rompi(oggetto2);
 				}
 				return "Non puoi rompere " + ogg.getNome();
 			} catch (ElementoInesistenteException e) {

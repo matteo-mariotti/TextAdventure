@@ -4,15 +4,13 @@ import it.uniroma1.textadv.characters.Entita;
 
 public class PagamentoNecessarioException extends Exception {
 
-	private Entita owner;
+	
+	public PagamentoNecessarioException(Entita e, String s) {
+		super(s);
+	}
 	
 	public PagamentoNecessarioException(Entita e) {
-		owner = e;
+		super("Devi prima pagare" + e.getNome() + "!!");
 	}
-	
-	public String getNomeOwner() {
-		return owner.getNome();
-	}
-	
 }
 

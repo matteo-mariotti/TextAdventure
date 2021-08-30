@@ -1,6 +1,6 @@
 package it.uniroma1.textadv.oggetti;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 
 public class Secchio extends  Oggetto implements Usable {
 	
@@ -27,7 +27,7 @@ public class Secchio extends  Oggetto implements Usable {
 	}
 	
 	@Override
-	public String use(ElementiStanza e) {
+	public String use(ElementoStanza e) {
 		if (e instanceof Pozzo)
 			return ((Pozzo) e).riempi(this);
 		if (e instanceof Camino)

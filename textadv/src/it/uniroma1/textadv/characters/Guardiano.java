@@ -1,61 +1,68 @@
 package it.uniroma1.textadv.characters;
 
-import java.util.List;
-
-import it.uniroma1.textadv.ElementiStanza;
-import it.uniroma1.textadv.oggetti.Oggetto;
-import it.uniroma1.textadv.oggetti.Soldi;
+import it.uniroma1.textadv.ElementoStanza;
 import it.uniroma1.textadv.oggetti.Tesoro;
 import it.uniroma1.textadv.rooms.PagamentoNecessarioException;
-import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
 import it.uniroma1.textadv.textEngine.verbs.Prendi;
 
+/**
+ * Classe che modella il Guardiano del tesoro della storia
+ * @author matte
+ *
+ */
 public class Guardiano extends Personaggio implements Payable{
 	
+	/**
+	 * Tesoro che viene protetto dal guardiano
+	 */
 	private Tesoro tesoroSegreto;
+	/**
+	 * Distrazione che permette di prendere il tesoro
+	 */
 	private Entita distrazione;
+	/**
+	 * Stato del guardiano (distratto o meno)
+	 */
 	private boolean distracted = false;
-		
-	public Guardiano(String nome, Entita gattinoCalmante, Tesoro tesoro) {
+	/**
+	 * Messaggio del guardiano
+	 */
+	private final static String MESSAGGIO = "Io sono il protettore del tesoro, non sarà così semplice!!!!!";
+	/**
+	 * Costruttore del guardiano
+	 * @param nome Nome del Guardiano
+	 * @param distrazione 
+	 * @param tesoro
+	 */
+	public Guardiano(String nome, Entita distrazione, Tesoro tesoro) {
 		super(nome);
-		distrazione = gattinoCalmante;
+		this.distrazione = distrazione;
 		super.addOggetto(tesoro);
 		tesoro.setOwner(this);
 	}
 	
-	public Guardiano(String nome) {
-		super(nome);
-	}
-	
-	public void get(Gatto gattino) {
-		if (gattino == distrazione)
-			distracted = true;
-	}
-	
-	public Oggetto getTesoro() {
+	/**
+	 * Permette di prendere il tesoro
+	 * @return Fornisce il tesoro se il guardiano è stato distratto precedentemente
+	 * @throws PagamentoNecessarioException 
+	 */
+	public String getTesoro() throws PagamentoNecessarioException {
 		if (distracted)
-			return tesoroSegreto;
-		else
-			System.out.println("Io sono il protettore del tesoro, non sarà così semplice!!!!!");
-		return null;
+			return new Prendi().esegui(tesoroSegreto.getNome());
+		throw new PagamentoNecessarioException(this,MESSAGGIO);
 	}
 	
-	public void addArguments(Entita ent, Tesoro tes) {
-		tes.setOwner(this);
-		super.addOggetto(tes);
-		distrazione = ent;
-	}
-	
-	public String pagamento(String s){
-		ElementiStanza e = Giocatore.instanceOf().getInventario().get(s);
+	@Override
+	public String pagamento(String s) throws PagamentoNecessarioException{
+		ElementoStanza e = Giocatore.instanceOf().getInventario().get(s);
 		if (e == distrazione) {
 			Giocatore.instanceOf().getInventario().remove(e.getNome());
 			for (String s1 : super.getInventario().keySet())
 				super.getInventario().get(s1).setOwner(null);
 			super.getInventario().clear();
 			return "Zzzz....";
-		}else
-		return "Non puoi!!";
+		}
+		throw new PagamentoNecessarioException(this);
 	}
 	
 }

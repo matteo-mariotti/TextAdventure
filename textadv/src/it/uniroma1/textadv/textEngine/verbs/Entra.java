@@ -13,8 +13,7 @@ public class Entra extends Verbo implements VerboUnitario {
 		Room l;
 		try {
 			l = Giocatore.instanceOf().getStanza().getDestRoom(stanza);
-			Giocatore.instanceOf().setRoom(l);
-			return "Ti trovi ora in: " + l.getNome();
+			return Giocatore.instanceOf().setRoom(l);
 		} catch (ChiaveNecessariaExeption e2) {
 			return "Ti serve una chiave per aprire questa stanza";
 		} catch (ElementoInesistenteException | DirezioneNonConsentitaException e1) {

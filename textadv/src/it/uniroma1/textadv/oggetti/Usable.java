@@ -1,10 +1,10 @@
 package it.uniroma1.textadv.oggetti;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 
 public interface Usable {
 
 	String use();
 	
-	String use(ElementiStanza e);
+	String use(ElementoStanza e);
 }

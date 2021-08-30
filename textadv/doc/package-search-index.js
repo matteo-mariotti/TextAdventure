@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"it.uniroma1.textadv"},{"l":"it.uniroma1.textadv.characters"},{"l":"it.uniroma1.textadv.oggetti"},{"l":"it.uniroma1.textadv.oggetti.links"},{"l":"it.uniroma1.textadv.rooms"},{"l":"it.uniroma1.textadv.textEngine"},{"l":"it.uniroma1.textadv.textEngine.verbs"}];updateSearchResults();

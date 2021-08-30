@@ -37,7 +37,7 @@ public class Salvadanaio extends OggettoCheInteragisce implements Breakable{
 		if (bBroken)
 			return "Il salvadanaio è già rotto";
 		else
-			return "Per rompere il salvadanaio hai bisogno di un oggetto";
+			return "Per rompere il salvadanaio hai bisogno di un oggetto adatto";
 	}
 	
 	

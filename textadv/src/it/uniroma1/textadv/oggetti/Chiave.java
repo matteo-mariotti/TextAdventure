@@ -1,6 +1,7 @@
 package it.uniroma1.textadv.oggetti;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
+import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
 
 public class Chiave extends OggettoCheInteragisce implements Usable {
 
@@ -18,13 +19,16 @@ public class Chiave extends OggettoCheInteragisce implements Usable {
 	}
 
 	@Override
-	public String use(ElementiStanza e) {
+	public String use(ElementoStanza e) {
 		if (e instanceof Openable) {
-			((Openable) e).unlock(this);
-			return ((Openable) e).open();	
+			try {
+				((Openable) e).unlock(this);
+				return ((Openable) e).open();	
+			} catch (ChiaveNecessariaExeption e1) {
+				return "Non hai fornito la chiave corretta!";
+			}
 		}
-		else
-			return "Non puoi aprire " + e.getNome();
+		return "Non puoi aprire " + e.getNome();
 
 	}
 

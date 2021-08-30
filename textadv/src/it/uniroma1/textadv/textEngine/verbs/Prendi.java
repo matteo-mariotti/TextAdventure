@@ -3,7 +3,7 @@ package it.uniroma1.textadv.textEngine.verbs;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.Box;
 import it.uniroma1.textadv.oggetti.ImpossibileOttenereOggetto;
@@ -24,48 +24,45 @@ public class Prendi extends Verbo {
 	private static String CHIAVENECESSARIA = "Ti serve una chiave per aprire questo collegamento";
 
 	public String esegui(String oggetto, String oggettoContenitore) {
-		ElementiStanza ogg2;
 		try {
-			ogg2 = ObjFinder.getArg(oggettoContenitore);
-			if (ogg2 instanceof Box) {
-				Box b = (Box) ogg2;
-				ElementiStanza o = b.getContenuto(oggetto);
-				Giocatore.instanceOf().addOggetto(o);
-				return "Hai ottenuto: " + o.getNome();
-			} else {
-				return NOTABOX + oggettoContenitore;
-			}
+			ElementoStanza box = ObjFinder.getArg(oggettoContenitore);
+			if (box instanceof Box)
+				return getOggetto((Box) box, oggetto);
+			return NOTABOX + oggettoContenitore;
 		} catch (ElementoInesistenteException e) {
 			return Verbo.NON_TROVATO;
+		}
+	}
+
+	private String getOggetto(Box oggBox, String ogg) {
+		try {
+				ElementoStanza o = oggBox.getContenuto(ogg);
+				return Giocatore.instanceOf().addOggetto(o);
 		} catch (ImpossibileOttenereOggetto e) {
 			return ERROREGENERICO;
 		} catch (ChiaveNecessariaExeption e) {
 			return CONTENITOREBLOCCATO;
 		}
-
 	}
 
 	// Prendi un oggetto dalla stanza, da un Box, oppure prendi un link
 	public String esegui(String oggetto) {
-		ElementiStanza ogg;
+		ElementoStanza ogg;
 		try {
 			ogg = ObjFinder.getArg(oggetto);
 			if (ogg.getOwner() != null)
 				throw new PagamentoNecessarioException(ogg.getOwner());
 			if (ogg instanceof Link) {
 				// Se vuole prendere un link lo sposto
-				ogg = (Link) ogg;
 				Room r = Giocatore.instanceOf().getStanza().getDestRoom(ogg.getNome());
-				Giocatore.instanceOf().setRoom(r);
-				return "Ti trovi ora in: " + r.getNome();
+				return Giocatore.instanceOf().setRoom(r);
 			}
 			// Se vuole prendere un oggetto lo aggiungo all'inventario
-			Giocatore.instanceOf().addOggetto(ogg);
-			return "Hai ottenuto: " + ogg.getNome();
+			return Giocatore.instanceOf().addOggetto(ogg);
 		} catch (ElementoInesistenteException e) {
 			return checkBox(oggetto);
 		} catch (PagamentoNecessarioException e3) {
-			return "Devi pagare " + e3.getNomeOwner() + " per prendere questo oggetto";
+			return e3.getMessage();
 		} catch (DirezioneNonConsentitaException e) {
 			return DIREZIONENONCONSENTITA;
 		} catch (ChiaveNecessariaExeption e) {
@@ -79,16 +76,7 @@ public class Prendi extends Verbo {
 		List<Box> l = Giocatore.instanceOf().getStanza().listaElementi().values().stream().filter(x -> x instanceof Box)
 				.map(x -> (Box) x).collect(Collectors.toList());
 		for (int i = 0; i < l.size(); i++) {
-			ElementiStanza o;
-			try {
-				o = l.get(i).getContenuto(oggetto);
-				Giocatore.instanceOf().addOggetto(o);
-				return "Hai ottenuto: " + o.getNome();
-			} catch (ImpossibileOttenereOggetto e2) {
-				continue;
-			} catch (ChiaveNecessariaExeption e2) {
-				return CONTENITOREBLOCCATO;
-			}
+			return getOggetto(l.get(i), oggetto);
 		}
 		return Verbo.NON_TROVATO;
 	}

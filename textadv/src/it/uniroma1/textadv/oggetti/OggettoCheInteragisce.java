@@ -1,10 +1,10 @@
 package it.uniroma1.textadv.oggetti;
 
-import it.uniroma1.textadv.ElementiStanza;
+import it.uniroma1.textadv.ElementoStanza;
 
 public abstract class OggettoCheInteragisce extends Oggetto {
 
-	ElementiStanza interazione;
+	ElementoStanza interazione;
 
 	public OggettoCheInteragisce(String nome, Oggetto inter) {
 		super(nome);
