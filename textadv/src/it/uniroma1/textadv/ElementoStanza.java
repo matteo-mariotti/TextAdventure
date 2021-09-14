@@ -20,6 +20,7 @@ public abstract class ElementoStanza {
 
 	/**
 	 * Costruttore dell'elemento
+	 * @param nome Nome dell'elemento
 	 */
 	public ElementoStanza(String nome) {
 		this.nome = nome;
@@ -27,6 +28,7 @@ public abstract class ElementoStanza {
 	
 	/**
 	 * Getter del nome
+	 * @return Nome dell'elemento
 	 */
 	public String getNome() {
 		return nome;

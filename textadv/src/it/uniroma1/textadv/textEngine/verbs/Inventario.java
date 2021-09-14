@@ -4,8 +4,16 @@ import java.util.stream.Collectors;
 
 import it.uniroma1.textadv.characters.Giocatore;
 
+/**
+ * Classe che modella il "verbo" inventario
+ * @author matte
+ *
+ */
 public class Inventario extends Verbo {
 
+	/**
+	 * Stringa da restituire se l'inventario è vuoto
+	 */
 	private static final String EMPTY = "Inventario vuoto";
 	
 	@Override

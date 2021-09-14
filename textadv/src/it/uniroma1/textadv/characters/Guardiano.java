@@ -1,7 +1,6 @@
 package it.uniroma1.textadv.characters;
 
 import it.uniroma1.textadv.ElementoStanza;
-import it.uniroma1.textadv.oggetti.Tesoro;
 import it.uniroma1.textadv.rooms.PagamentoNecessarioException;
 import it.uniroma1.textadv.textEngine.verbs.Prendi;
 
@@ -15,11 +14,11 @@ public class Guardiano extends Personaggio implements Payable{
 	/**
 	 * Tesoro che viene protetto dal guardiano
 	 */
-	private Tesoro tesoroSegreto;
+	private ElementoStanza tesoroSegreto;
 	/**
 	 * Distrazione che permette di prendere il tesoro
 	 */
-	private Entita distrazione;
+	private ElementoStanza distrazione;
 	/**
 	 * Stato del guardiano (distratto o meno)
 	 */
@@ -31,10 +30,10 @@ public class Guardiano extends Personaggio implements Payable{
 	/**
 	 * Costruttore del guardiano
 	 * @param nome Nome del Guardiano
-	 * @param distrazione 
-	 * @param tesoro
+	 * @param distrazione Entita che distrae il guardiano
+	 * @param tesoro Tesoro protetto dal guardiano
 	 */
-	public Guardiano(String nome, Entita distrazione, Tesoro tesoro) {
+	public Guardiano(String nome, ElementoStanza distrazione, ElementoStanza tesoro) {
 		super(nome);
 		this.distrazione = distrazione;
 		super.addOggetto(tesoro);
@@ -44,12 +43,16 @@ public class Guardiano extends Personaggio implements Payable{
 	/**
 	 * Permette di prendere il tesoro
 	 * @return Fornisce il tesoro se il guardiano è stato distratto precedentemente
-	 * @throws PagamentoNecessarioException 
+	 * @throws PagamentoNecessarioException Se non ha ancora pagato il guardiano
 	 */
 	public String getTesoro() throws PagamentoNecessarioException {
 		if (distracted)
 			return new Prendi().esegui(tesoroSegreto.getNome());
-		throw new PagamentoNecessarioException(this,MESSAGGIO);
+		throw new PagamentoNecessarioException(this,getMsg());
+	}
+	
+	private String getMsg() {
+		return MESSAGGIO;
 	}
 	
 	@Override

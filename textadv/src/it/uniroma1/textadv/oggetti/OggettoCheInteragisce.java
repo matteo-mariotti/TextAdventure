@@ -2,28 +2,43 @@ package it.uniroma1.textadv.oggetti;
 
 import it.uniroma1.textadv.ElementoStanza;
 
+/**
+ * Classe che modella un oggetto che interagisce con un altro elemento della
+ * stanza
+ * 
+ * @author matte
+ *
+ */
 public abstract class OggettoCheInteragisce extends Oggetto {
 
+	/**
+	 * Interazione dell'oggetto
+	 */
 	ElementoStanza interazione;
 
-	public OggettoCheInteragisce(String nome, Oggetto inter) {
+	/**
+	 * Costruttore della classe
+	 * 
+	 * @param nome  Nome dell'oggetto
+	 * @param inter Elemento con cui interagisce
+	 */
+	public OggettoCheInteragisce(String nome, ElementoStanza inter) {
 		super(nome);
 		interazione = inter;
 	}
 
-	public OggettoCheInteragisce(String nome) {
-		this(nome, null);
-	}
-
-	public void addInteraction(Oggetto ogg) {
-		interazione = ogg;
-	}
-	
+	/**
+	 * Permette di verificare se l'oggetto possiede un'interazione o meno
+	 * 
+	 * @return True se l'interazione è presente, false altrimenti
+	 */
 	public boolean getInterazione() {
-		if (interazione == null)
-			return false;
-		return true;
+		return interazione == null ? false : true;
 	}
 	
+	
+	public ElementoStanza getOggInter() {
+		return interazione;
+	}
 
 }

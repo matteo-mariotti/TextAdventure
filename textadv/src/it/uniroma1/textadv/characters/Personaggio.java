@@ -3,7 +3,6 @@ package it.uniroma1.textadv.characters;
 import java.util.HashMap;
 import java.util.Map;
 import it.uniroma1.textadv.ElementoStanza;
-import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 
 /**
  * Classe astratta che modella un generico personaggio
@@ -38,8 +37,8 @@ public abstract class Personaggio extends Entita {
 
 	/**
 	 * Metodo che permette di aggiungere oggetti all'inventario del giocatore
-	 * @param ogg
-	 * @return
+	 * @param ogg Oggetto da aggiungere
+	 * @return Stringa con il risultato dell'operazione
 	 */
 	public String addOggetto(ElementoStanza ogg) {
 		inventario.put(ogg.getNome(), ogg);

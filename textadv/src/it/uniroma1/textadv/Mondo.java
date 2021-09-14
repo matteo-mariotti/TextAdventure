@@ -16,9 +16,9 @@ import it.uniroma1.textadv.characters.Entita;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.characters.Guardiano;
 import it.uniroma1.textadv.oggetti.Oggetto;
-import it.uniroma1.textadv.oggetti.OggettoCheInteragisce;
 import it.uniroma1.textadv.oggetti.Tesoro;
 import it.uniroma1.textadv.oggetti.links.Link;
+import it.uniroma1.textadv.rooms.DirezioneNonConsentitaException;
 import it.uniroma1.textadv.rooms.Room;
 
 /**
@@ -87,16 +87,30 @@ public class Mondo {
 		return oggettoVittoria;
 	}
 
+	/**
+	 * Metodo che si occupa di creare il mondo
+	 * @param s Nome del file .game da cui creare il mondo
+	 * @return Mondo istanziato
+	 * @throws IOException Se c'è un errore durante la lettura del file
+	 */
 	public static Mondo fromFile(String s) throws IOException {
 		return fromFile(Paths.get(s));
 	}
 
+	/**
+	 * Metodo che si occupa di creare il mondo
+	 * @param path Path del file .game da cui creare il mondo
+	 * @return Mondo istanziato
+	 * @throws IOException Se c'è un errore durante la lettura del file
+	 */
 	public static Mondo fromFile(Path path) throws IOException {
 		Mondo m = new Mondo();
 		// Creo un buffer per leggere il file
 		BufferedReader text = Files.newBufferedReader(path);
 		// Leggo la prima riga
 		String riga = text.readLine();
+		//Lista che uso per verificare se ci sono due elementi con lo stesso nome
+		List<String> lista = new ArrayList<>();
 		// Mi creo dei dizionari per tenere traccia di ogni elemento e dei suoi dati
 		Map<String, List<String>> mappaOggetti = new HashMap<>();
 		Map<String, List<String>> mappaStanze = new HashMap<>();
@@ -121,7 +135,7 @@ public class Mondo {
 			case "room" -> {
 				ArrayList<String> values = new ArrayList<String>();
 				if (mappaStanze.containsKey(info[1]))
-					throw new ErroreCreazioneException();
+					throw new ErroreCreazioneException("Non possono esiste due stanze con lo stesso nome!");
 				mappaStanze.put(info[1], values);
 				riga = text.readLine();
 				while (!(riga.isEmpty()) && !(riga.startsWith("[") && riga.endsWith("]"))) {
@@ -130,11 +144,11 @@ public class Mondo {
 				}
 			}
 			case "links" -> {
-				mappaLink = addData(text);
+				mappaLink = addData(text, lista);
 				riga = text.readLine();
 			}
 			case "objects" -> {
-				mappaOggetti = addData(text);
+				mappaOggetti = addData(text, lista);
 				riga = text.readLine();
 			}
 			case "player" -> {
@@ -146,13 +160,18 @@ public class Mondo {
 				riga = text.readLine();
 			}
 			case "characters" -> {
-				mappaPersonaggi = addData(text);
+				mappaPersonaggi = addData(text, lista);
 				riga = text.readLine();
 
 			}
 			default -> riga = text.readLine();
 			}
 		}
+		//System.out.println(mappaOggetti);
+		//System.out.println(mappaStanze);
+		//System.out.println(mappaLink);
+		//System.out.println(mappaPersonaggi);
+
 		// Inizio a creare gli oggetti del mondo
 		m.initialize(m, mappaOggetti, mappaStanze, mappaLink, mappaPersonaggi);
 
@@ -180,8 +199,9 @@ public class Mondo {
 			Map<String, Room> stanze = creaStanze(links, oggetti, personaggi, mappaStanze);
 			mondo.player.setRoom(stanze.get(mondo.startingRoom));
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			throw new ErroreCreazioneException();
+				| IllegalAccessException | IllegalArgumentException | InvocationTargetException | DirezioneNonConsentitaException e) {
+			e.printStackTrace();
+			throw new ErroreCreazioneException("Si è verificato un errore durante la creazione del mondo");
 		}
 
 	}
@@ -195,14 +215,16 @@ public class Mondo {
 	 * @param stanze     Mappa delle stanze
 	 * @return Mappa con chiave la Stringa che indentifica la stanza e la
 	 *         corrispondente Room associata
+	 * @throws DirezioneNonConsentitaException 
 	 */
 	private Map<String, Room> creaStanze(Map<String, Link> links, Map<String, Oggetto> oggetti,
-			Map<String, Entita> personaggi, Map<String, List<String>> stanze) {
+			Map<String, Entita> personaggi, Map<String, List<String>> stanze) throws DirezioneNonConsentitaException {
 		Map<String, Room> stanzeComplete = new HashMap<>();
+		List<String> usati = new ArrayList<>();
 		for (String s : stanze.keySet()) {
 			if (stanzeComplete.containsKey(s))
 				continue;
-			creaStanza(s, stanze, links, oggetti, personaggi, stanzeComplete);
+			creaStanza(s, stanze, links, oggetti, personaggi, stanzeComplete, usati);
 		}
 		return stanzeComplete;
 	}
@@ -217,9 +239,10 @@ public class Mondo {
 	 * @param personaggi     Mappa dei personaggi
 	 * @param stanzeComplete Mappa che "raccoglie" le nuove istanze create
 	 * @return La nuova stanza creata
+	 * @throws DirezioneNonConsentitaException Se la stanza è connessa ad un'altra che non esiste
 	 */
 	private Room creaStanza(String s, Map<String, List<String>> stanze, Map<String, Link> links,
-			Map<String, Oggetto> oggetti, Map<String, Entita> personaggi, Map<String, Room> stanzeComplete) {
+			Map<String, Oggetto> oggetti, Map<String, Entita> personaggi, Map<String, Room> stanzeComplete, List<String> used) throws DirezioneNonConsentitaException {
 		s = s.strip();
 		Room room = Room.getInstance(s);
 		stanzeComplete.put(s, room);
@@ -234,6 +257,9 @@ public class Mondo {
 				String[] ogg = dati[1].split(",");
 				for (String oggetto : ogg) {
 					room.addElementi(oggetti.get(oggetto.strip()));
+					if (used.contains(oggetto.strip()))
+						throw new ErroreCreazioneException("Non puoi mettere " + oggetto.strip() + " in due stanze!");
+					used.add(oggetto.strip());
 				}
 			}
 			case "characters" -> {
@@ -241,6 +267,9 @@ public class Mondo {
 					String[] ents = dati[1].split(",");
 					for (String pers : ents) {
 						room.addElementi(personaggi.get(pers.strip()));
+						if (used.contains(pers.strip()))
+							throw new ErroreCreazioneException("Non puoi mettere " + pers.strip() + " in due stanze!");
+						used.add(pers.strip());
 					}
 				}
 			}
@@ -249,13 +278,15 @@ public class Mondo {
 				for (String dir : direzioni) {
 					switch (dir.charAt(0)) {
 					case 'N' -> room.linkN(
-							obtainConnection(dir.substring(2), links, s, stanze, stanzeComplete, oggetti, personaggi));
+							obtainConnection(dir.substring(2), links, s, stanze, stanzeComplete, oggetti, personaggi, used));
 					case 'S' -> room.linkS(
-							obtainConnection(dir.substring(2), links, s, stanze, stanzeComplete, oggetti, personaggi));
+							obtainConnection(dir.substring(2), links, s, stanze, stanzeComplete, oggetti, personaggi, used));
 					case 'W', 'O' -> room.linkW(
-							obtainConnection(dir.substring(2), links, s, stanze, stanzeComplete, oggetti, personaggi));
+							obtainConnection(dir.substring(2), links, s, stanze, stanzeComplete, oggetti, personaggi, used));
 					case 'E' -> room.linkE(
-							obtainConnection(dir.substring(2), links, s, stanze, stanzeComplete, oggetti, personaggi));
+							obtainConnection(dir.substring(2), links, s, stanze, stanzeComplete, oggetti, personaggi, used));
+					case 'B' -> room.bonusB(
+							obtainConnection(dir.substring(2), links, s, stanze, stanzeComplete, oggetti, personaggi, used));
 
 					}
 				}
@@ -277,12 +308,13 @@ public class Mondo {
 	 * @param oggetti        Mappa degli oggetti
 	 * @param personaggi     Mappa dei personaggi
 	 * @return Tupla con il collegamento
+	 * @throws DirezioneNonConsentitaException Se il collegamento all'altra stanza è inesistente
 	 * @throws ErroreCreazioneException se la stanza che si cerca di collegare non
 	 *                                  esiste
 	 */
 	private Room.LinkTuple obtainConnection(String link, Map<String, Link> links, String s,
 			Map<String, List<String>> stanze, Map<String, Room> stanzeComplete, Map<String, Oggetto> oggetti,
-			Map<String, Entita> personaggi) {
+			Map<String, Entita> personaggi, List<String> used) throws DirezioneNonConsentitaException {
 		Link l = links.get(link);
 		if (l == null) {
 			// Se non è un link vedo se mi trovo di fronte ad una stanza
@@ -292,13 +324,13 @@ public class Mondo {
 					return new Room.LinkTuple(stanzeComplete.get(link), l);
 				// Oppure se la posso creare in ricorsione
 				else if (stanze.containsKey(link)) {
-					Room r = creaStanza(link, stanze, links, oggetti, personaggi, stanzeComplete);
+					Room r = creaStanza(link, stanze, links, oggetti, personaggi, stanzeComplete, used);
 					return new Room.LinkTuple(r, l);
 				}
 			}
 		} else
 			return new Room.LinkTuple(l.getConnection(s), l);
-		throw new ErroreCreazioneException();
+		throw new ErroreCreazioneException("La connessione con la stanza " + link + " è inesistente");
 	}
 
 	/**
@@ -363,18 +395,9 @@ public class Mondo {
 					personaggi.put(nomePersonaggio, ent);
 				} else {
 					// Sto creando un guardiano
-					Constructor<?> costruttore = classe.getConstructor(String.class, Entita.class, Tesoro.class);
-					Entita e = null;
-					String arg2 = dati.get(2);
-					if (personaggi.containsKey(arg2))
-						// Se esiste già
-						e = personaggi.get(arg2);
-					else
-						// Altrimenti lo creo in ricorsione
-						e = creaPersonaggio(arg2, mappaPersonaggi, oggetti, personaggi);
-					Tesoro t = (Tesoro) oggetti.get(dati.get(1));
-					if (t == null)
-						throw new ErroreCreazioneException();
+					Constructor<?> costruttore = classe.getConstructor(String.class, ElementoStanza.class, ElementoStanza.class);
+					ElementoStanza e = cercaDato(dati.get(2), mappaPersonaggi, oggetti, personaggi);
+					ElementoStanza t = cercaDato(dati.get(1), mappaPersonaggi, oggetti, personaggi);
 					Guardiano g = (Guardiano) costruttore.newInstance(nomePersonaggio, e, t);
 					ent = g;
 					personaggi.put(nomePersonaggio, ent);
@@ -389,6 +412,19 @@ public class Mondo {
 		return ent;
 	}
 
+	private ElementoStanza cercaDato(String s, Map<String, List<String>> mappaPersonaggi,
+			Map<String, Oggetto> oggetti, Map<String, Entita> personaggi ) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		if (personaggi.containsKey(s))
+			// Se esiste già
+			return personaggi.get(s);
+		else if (oggetti.containsKey(s))
+			return oggetti.get(s);
+		else if (mappaPersonaggi.containsKey(s))
+			// Altrimenti lo creo in ricorsione
+			return creaPersonaggio(s, mappaPersonaggi, oggetti, personaggi);
+		throw new ErroreCreazioneException("L'oggetto " + s + "non esiste!");
+	}
+	
 	/**
 	 * Crea gli oggetti del mondo
 	 * 
@@ -457,15 +493,12 @@ public class Mondo {
 					object = (Oggetto) costruttore.newInstance(nomeOggetto, ogg);
 					oggetti.put(nomeOggetto, object);
 				} else if (mappaOggetti.containsKey(interazione)) {
-					Constructor<?> costr = classe.getConstructor(String.class);
-					OggettoCheInteragisce objInter = (OggettoCheInteragisce) costr.newInstance(nomeOggetto);
-					object = objInter;
-					// Devo prima inserire l'oggetto per evitare loop nella ricorsione
-					oggetti.put(nomeOggetto, objInter);
 					Oggetto obj = creaOggetto(dati.get(1), mappaOggetti, links, oggetti, m);
-					objInter.addInteraction(obj);
+					Constructor<?> costr = classe.getConstructor(String.class, Oggetto.class);
+					object = (Oggetto) costr.newInstance(nomeOggetto, obj);
+					oggetti.put(nomeOggetto, object);
 				} else {
-					throw new ErroreCreazioneException();
+					throw new ErroreCreazioneException("Non posso trovare l'oggetto " + interazione);
 				}
 			} else {
 				// Se non interagisce
@@ -476,7 +509,7 @@ public class Mondo {
 					if (m.oggettoVittoria == null)
 						m.oggettoVittoria = (Tesoro) object;
 					else
-						throw new ErroreCreazioneException();
+						throw new ErroreCreazioneException("Non possono esistere due tesori nel gioco!");
 			}
 
 		} else
@@ -513,7 +546,7 @@ public class Mondo {
 				Link link = (Link) costruttore.newInstance(s, partenza, destinazione);
 				links.put(s, link);
 			} else
-				throw new ErroreCreazioneException();
+				throw new ErroreCreazioneException("Le stanze collegate da questo link "+ s +" non esistono");
 		}
 		return links;
 	}
@@ -522,17 +555,19 @@ public class Mondo {
 	 * Legge tutti i link/oggetti fino ad incontrare la prossima sezione [....]
 	 * 
 	 * @param text BufferedReader del file
+	 * @param listaCreati lista che tiene traccia degli oggetti già creati (non possono esistere due oggetti con lo stesso nome)
 	 * @return Mappa da stringa ai dati degli oggetti/link
 	 * @throws IOException
 	 */
-	private static Map<String, List<String>> addData(BufferedReader text) throws IOException {
+	private static Map<String, List<String>> addData(BufferedReader text, List<String> listaCreati) throws IOException {
 		Map<String, List<String>> mappa = new HashMap<>();
 		String riga = text.readLine();
 		while (!(riga == null) && !(riga.isEmpty()) && !(riga.startsWith("[") && riga.endsWith("]"))) {
 			ArrayList<String> values = new ArrayList<String>();
 			String[] dati = eliminaTab(riga);
-			if (mappa.containsKey(dati[0]))
-				throw new ErroreCreazioneException();
+			if (listaCreati.contains(dati[0]))
+				throw new ErroreCreazioneException("Non possono esistere due elementi con lo stesso nome nel file .game");
+			listaCreati.add(dati[0]);
 			mappa.put(dati[0], values);
 			values.add(dati[1].split("//")[0].strip());
 			if (dati.length >= 3)

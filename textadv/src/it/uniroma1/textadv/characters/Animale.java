@@ -1,12 +1,14 @@
 package it.uniroma1.textadv.characters;
 
+import it.uniroma1.textadv.oggetti.Takeable;
+
 /**
  * Classe che rappresenta un generico animale
  * 
  * @author matte
  *
  */
-public abstract class Animale extends Entita {
+public abstract class Animale extends Entita implements Takeable {
 
 	/**
 	 * Costruttore della classe

@@ -52,11 +52,11 @@ public class Giocatore extends Personaggio {
 	/**
 	 * Metodo per impostare la stanza in cui si trova il giocatore
 	 * 
-	 * @param stanza
-	 * @return
+	 * @param stanza Stanza in cui spostare il giocatore
+	 * @return Stringa con il risultato dell'operazione
 	 */
 	public String setRoom(Room stanza) {
 		stanzaCorrente = stanza;
-		return "Ti trovi ora in " + stanza;
+		return "Ti trovi ora in " + stanza.getNome();
 	}
 }

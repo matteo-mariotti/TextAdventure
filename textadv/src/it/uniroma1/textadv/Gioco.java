@@ -11,7 +11,11 @@ import java.util.List;
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.textEngine.MotoreTestuale;
 import it.uniroma1.textadv.textEngine.verbs.Verbo;
-
+/**
+ * Classe che si occupa della gestione del gioco
+ * @author matte
+ *
+ */
 public class Gioco {
 
 	/**
@@ -28,6 +32,7 @@ public class Gioco {
 	 * @param mondoDiGioco Mondo su cui si sta giocando
 	 */
 	public void play(Mondo mondoDiGioco){
+		System.out.println(mondoDiGioco.description);
 		while (!vittoria(mondoDiGioco)) {
 			List<String> comando =	MotoreTestuale.leggiComando();
 			System.out.println(exec(comando));

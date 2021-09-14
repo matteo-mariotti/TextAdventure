@@ -2,8 +2,17 @@ package it.uniroma1.textadv.oggetti;
 
 import it.uniroma1.textadv.ElementoStanza;
 
-public class Cacciavite extends Oggetto implements Usable{
+/**
+ * Classe che rappresenta un cacciavite
+ * @author matte
+ *
+ */
+public class Cacciavite extends Oggetto implements Usable, Takeable{
 	
+	/**
+	 * Costruttore del cacciavite
+	 * @param nome Nome dell'oggetto
+	 */
 	public Cacciavite(String nome) {
 		super(nome);
 	}

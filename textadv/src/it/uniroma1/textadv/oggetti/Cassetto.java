@@ -1,44 +1,28 @@
 package it.uniroma1.textadv.oggetti;
-
-import it.uniroma1.textadv.ElementoStanza;
-import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
-
-public class Cassetto extends OggettoCheInteragisce implements Openable, Box{
-
-	private boolean bOpen = false;
+/**
+ * Classe che modella un cassetto
+ * @author matte
+ *
+ */
+public class Cassetto extends Box implements Openable{
 	
+	/**
+	 * Costruttore della classe
+	 * @param nome Nome dell'oggetto
+	 * @param inter Oggetto contenuto
+	 */
 	public Cassetto(String nome, Oggetto inter) {
 		super(nome, inter);
 	}
 	
-	public Cassetto(String nome) {
-		super(nome);
-	}
-
 	@Override
-	public boolean unlock(Oggetto ogg) {
+	public boolean unlock(OggettoCheInteragisce ogg) {
 		return true;
 	}
-	
-
-	@Override
-	public ElementoStanza getContenuto(String obj) throws  ChiaveNecessariaExeption, ImpossibileOttenereOggetto{
-		if (!(bOpen))
-			throw new ChiaveNecessariaExeption();//TODO Eccezione perchè il cassetto è chiuso
-		if (super.interazione == null)
-			throw new ImpossibileOttenereOggetto(); //TODO Lancia una eccezione perche non contiene l'elemento
-		else if (obj.equals(super.interazione.getNome())) {
-			ElementoStanza o = super.interazione;
-			super.interazione = null;
-			return o;
-		} else
-			throw new ImpossibileOttenereOggetto(); //TODO Lancia una eccezione perche non contiene l'elemento
-	}
-	
 
 	@Override
 	public String open() {
-		bOpen = true;
+		super.setStatus(true);
 		return "Il cassetto è ora aperto";
 	}
 

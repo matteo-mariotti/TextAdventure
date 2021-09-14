@@ -1,7 +1,58 @@
 package it.uniroma1.textadv.textEngine;
 
+/**
+ * Enumerazione che contiene le possibili direzioni che il giocatore può
+ * prendere
+ * 
+ * @author matte
+ *
+ */
 public enum Direzione {
 
-	NORD, SUD, WEST, OVEST, EAST, EST, N, S, W, O, E;
-	
+	/**
+	 * Direzione Nord
+	 */
+	NORD,
+	/**
+	 * Direzione Sud
+	 */
+	SUD,
+	/**
+	 * Direzione Ovest
+	 * 
+	 */
+	WEST,
+	/**
+	 * Direzione Ovest
+	 */
+	OVEST,
+	/**
+	 * Direzione Est
+	 */
+	EAST,
+	/**
+	 * Direzione Est
+	 */
+	EST,
+	/**
+	 * Direzione Nord
+	 */
+	N,
+	/**
+	 * Direzione Sud
+	 */
+	S,
+	/**
+	 * Direzione Ovest
+	 */
+	W,
+	/**
+	 * Direzione Ovest
+	 */
+	O,
+	/**
+	 * Direzione Est
+	 */
+	E, B;
+
 }

@@ -4,6 +4,11 @@ package it.uniroma1.textadv;
  * @author matte
  *
  */
+@SuppressWarnings("serial")
 public class ErroreCreazioneException extends RuntimeException {
+	
+	public ErroreCreazioneException(String mess) {
+		super(mess);
+	}
 
 }

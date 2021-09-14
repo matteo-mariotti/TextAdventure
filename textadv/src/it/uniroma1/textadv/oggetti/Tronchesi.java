@@ -1,13 +1,19 @@
 package it.uniroma1.textadv.oggetti;
-
-public class Tronchesi extends OggettoCheInteragisce{
-
+/**
+ * Classe che modella 
+ * @author matte
+ *
+ */
+public class Tronchesi extends OggettoCheInteragisce implements Takeable{
+	/**
+	 * Costruttore della classe
+	 * @param nome Nome dell'oggetto
+	 * @param inter Interazione
+	 */
 	public Tronchesi(String nome, Oggetto inter) {
 		super(nome, inter);
 	}
-	
-	public Tronchesi(String nome) {
-		super(nome);
-	}
 
 }
+
+ 

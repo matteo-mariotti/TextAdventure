@@ -5,13 +5,32 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Motore testuale che si occupa di interpretare i comandi inseriti dal giocatore
+ * @author matte
+ *
+ */
 public class MotoreTestuale {
 
+	/**
+	 * Permette di lettere da tastiera il comando dell'utente
+	 * @return Comando diviso dall'interprete
+	 */
 	public static List<String> leggiComando(){
+		String s;
+		do {
+		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
-		return parser(in.nextLine());
+		s = in.nextLine();
+		}while(s.isEmpty());
+		return parser(s);
 	}
 
+	/**
+	 * Permette di dividere secondo l'interprete la stringa in input
+	 * @param s Stringa da interpretare
+	 * @return Lista con la stringa divisa
+	 */
 	public static List<String> parser(String s){
 		s = s.replaceAll(" il | lo | la | i | gli | le ", " ");
 		String[] comando = s.split(" con | su | a | da | nella | nel | in ");

@@ -1,18 +1,27 @@
 package it.uniroma1.textadv.oggetti;
 
 import it.uniroma1.textadv.characters.Giocatore;
-
+/**
+ * Classe che modella un salvadanaio
+ * @author matte
+ *
+ */
 public class Salvadanaio extends OggettoCheInteragisce implements Breakable{
 
+	/**
+	 * Flag per indicare se il salvadanaio è rotto oppure no
+	 */
 	private boolean bBroken = false;
 	
+	/**
+	 * Costruttore della classe Salvadanaio
+	 * @param nome Nome del salvadanaio
+	 * @param inter Oggetto contenuto nel salvadanaio
+	 */
 	public Salvadanaio(String nome, Oggetto inter) {
 		super(nome, inter);
 	}
 	
-	public Salvadanaio(String nome) {
-		super(nome);
-	}
 
 	@Override
 	public String rompi(Oggetto ogg) {
@@ -34,10 +43,7 @@ public class Salvadanaio extends OggettoCheInteragisce implements Breakable{
 
 	@Override
 	public String rompi() {
-		if (bBroken)
-			return "Il salvadanaio è già rotto";
-		else
-			return "Per rompere il salvadanaio hai bisogno di un oggetto adatto";
+		return bBroken ? "Il salvadanaio è già rotto" : "Per rompere il salvadanaio hai bisogno di un oggetto adatto";
 	}
 	
 	

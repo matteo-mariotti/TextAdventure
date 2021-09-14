@@ -15,8 +15,8 @@ public interface Payable {
 	 * Metodo che permette di pagare
 	 * @param e Pagamento fornito
 	 * @return Stringa con il risultato dell'operazione
-	 * @throws PagamentoNecessarioException
-	 * @throws ElementoInesistenteException 
+	 * @throws PagamentoNecessarioException Se è necessario pagare l'entita
+	 * @throws ElementoInesistenteException Se non trovo l'elemento
 	 */
 	String pagamento(String e) throws PagamentoNecessarioException, ElementoInesistenteException;
 	

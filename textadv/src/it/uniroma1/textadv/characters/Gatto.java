@@ -25,4 +25,12 @@ public class Gatto extends Animale{
 		return VERSO;
 	}
 	
+	/**
+	 * Metodo che permette di parlare con una entita
+	 * @return Stringa con la risposta dell'entita
+	 */
+	public String speak() {
+		return VERSO;
+	}
+	
 }

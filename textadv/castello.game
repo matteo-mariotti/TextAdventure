@@ -1,0 +1,125 @@
+[world:Il castello lontano]
+description	Benvenuto nel castello delle avventure!
+start	androne
+
+[room:androne]
+description	L'androne principale del castello
+objects	tappeto
+characters	guardia androne
+links	E:porta cucina,S:scala seminterrato,N:scala corridoio,O:porta salone
+
+[room:seminterrato]
+description	Il seminterrato del castello, sembra sia abbandonato da un po'
+objects	scrivania
+characters	meow, garfield
+links	N:scala seminterrato
+
+[room:stanza]
+description	Gioco ideato e realizzato da Matteo Mariotti
+objects	chiave assonnata
+links	B:teletrasporto
+
+[room:cucina]
+description	La cucina del castello
+objects	frullino
+characters	cuoco
+links	O:porta cucina,N:dispensa
+
+[room:dispensa]
+description	La dispensa della cucina, non sarebbe il caso di riempirla?
+objects	pera,bistecca
+links	S:cucina
+
+[room:camera reale]
+description	Camera principale del castello
+objects	letto reale, armadio
+links	O:porta reale,E:guardaroba
+
+[room:guardaroba]
+description	Il guardaroba del principe
+objects	vestito rosso, vestito blu, camicia
+links	O:camera reale
+
+[room:caveau]
+description	Il caveau dove i reali tengono nascosti i loro beni
+objects	montagna di gioielli
+links	S:passaggio segreto
+
+[room:corridoio]
+description	Il corridoio che collega le camere del castello
+objects	statua di coccio
+links	S:scala corridoio,N:porta camera,E:porta reale,W:scalinata
+
+[room:camera]
+description	La camera degli ospiti del castello
+objects	letto
+links	S:porta camera
+
+[room:torre]
+description	Torre di guardia del castello, da qui di si può osservare tutto! 
+links	N:porta blindata,S:botola,E:scalinata
+
+[room:posto di guardia]
+description	Qui è dove le guardie si appostano per difendere il castello
+objects	martello
+links	S:porta blindata
+
+[room:tetto]
+description	Tetto dell'edificio
+objects	cannone, cassa
+links	N:botola
+
+[room:salone delle feste]
+description	Un enorme salone dove si svolgono i banchetti del castello
+objects	soldi sporchi
+links	E:porta salone
+
+[links]
+scala seminterrato	Scala	seminterrato	androne
+porta salone	Porta	androne	salone delle feste
+porta cucina	Porta	androne	cucina
+porta emergenza	Porta	camera reale	seminterrato
+scala corridoio	Scala	androne	corridoio
+porta camera	Porta	corridoio	camera
+porta reale	Porta	camera reale	corridoio
+passaggio segreto	Porta	camera reale	caveau
+botola	Botola	torre	tetto
+porta blindata	Porta	torre	posto di guardia
+scalinata	Scala	corridoio	torre
+teletrasporto	Teletrasporto	corridoio	stanza
+
+[characters]
+meow	Gatto
+guardia androne	Guardia	chiave quadrata	soldi sporchi
+garfield	Gatto
+cuoco	Cuoco
+[player]
+Fred	Giocatore
+
+[objects]
+tappeto	Tappeto	chiave quadrata
+armadio	Armadio	passaggio segreto
+scrivania	Scrivania	chiave colorata
+cassetto	Cassetto	chiave assonnata
+chiave cassetto	Chiave	cassetto
+chiave colorata	Chiave	porta salone
+soldi sporchi	Soldi
+frullino	Smerigliatrice	armadio
+statua di coccio	Statua	teletrasporto
+chiave quadrata	Chiave	passaggio segreto
+chiave assonnata	Chiave	porta camera
+chiave cucina	Chiave	porta cucina
+martello	Martello
+chiave reale	Chiave	porta reale
+letto	Letto	chiave reale
+letto reale	Letto
+pera	Cibo
+pesca	Cibo
+bistecca	Cibo
+vestito rosso	Vestito
+vestito blu	Vestito
+camicia	Vestito
+montagna di gioielli	Tesoro
+cannone	Cannone
+cassa	Cassa	chiave cucina
+chiave rossa	Chiave	porta emergenza

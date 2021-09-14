@@ -2,28 +2,39 @@ package it.uniroma1.textadv.oggetti;
 
 import it.uniroma1.textadv.ElementoStanza;
 import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
-import it.uniroma1.textadv.rooms.ElementoInesistenteException;
-import it.uniroma1.textadv.textEngine.OggettoInesistenteException;
+/**
+ * Classe che modella un camino
+ * @author matte
+ *
+ */
+public class Camino extends Box{
+	/**
+	 * Flag che indica se il camino è acceso o spento
+	 */
+	boolean bAcceso = true;
 
-public class Camino extends OggettoCheInteragisce implements Box{
-
-	boolean acceso = true;
-
+	/**
+	 * Costruttore del camino
+	 * @param nome Nome dell'oggetto
+	 * @param inter Oggetto contenuto nel camino
+	 */
 	public Camino(String nome, Oggetto inter) {
 		super(nome, inter);
 	}
-
-	public Camino(String nome) {
-		super(nome);
-	}
-
+	
+	@Override
 	public String toString() {
-		return "Il camino è " + (acceso ? "acceso" : "spento") + " e contiene: " + super.interazione;
+		return "Il camino è " + (bAcceso ? "acceso" : "spento") + " e contiene: " + super.interazione;
 	}
 
+	/**
+	 * Metodo per spegnere il camino
+	 * @param sec Secchio con cui spegnere il camino
+	 * @return Stringa con il risultato dell'operazione
+	 */
 	public String spegni(Secchio sec) {
 		if (sec.filled()) {
-			acceso = false;
+			bAcceso = false;
 			sec.empty();
 			return "Camino spento";
 		} else {
@@ -34,11 +45,9 @@ public class Camino extends OggettoCheInteragisce implements Box{
 	
 	@Override
 	public ElementoStanza getContenuto(String obj) throws ImpossibileOttenereOggetto, ChiaveNecessariaExeption{
-		if (acceso)
-			throw new ChiaveNecessariaExeption();//TODO Eccezione perchè il camino è acceso
-		if (super.interazione == null)
-			throw new ImpossibileOttenereOggetto(); //TODO Lancia una eccezione perche non contiene l'elemento
-		else if (obj.equals(super.interazione.getNome())) {
+		if (bAcceso)
+			throw new ChiaveNecessariaExeption();
+		else if (super.interazione != null && obj.equals(super.interazione.getNome())) {
 			ElementoStanza o = super.interazione;
 			super.interazione = null;
 			return o;

@@ -20,7 +20,7 @@ public abstract class Entita extends ElementoStanza {
 
 	/**
 	 * Metodo che permette di parlare con una entita
-	 * @return
+	 * @return Stringa con la risposta dell'entita
 	 */
 	public String speak() {
 		return "Ciao, io sono " + super.getNome();

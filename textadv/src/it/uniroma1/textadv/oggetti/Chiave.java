@@ -3,16 +3,22 @@ package it.uniroma1.textadv.oggetti;
 import it.uniroma1.textadv.ElementoStanza;
 import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
 
-public class Chiave extends OggettoCheInteragisce implements Usable {
+/**
+ * Classe che modella l'oggetto chiave
+ * @author matte
+ *
+ */
+public class Chiave extends OggettoCheInteragisce implements Usable, Takeable{
 
+	/**
+	 * Costruttore della chiave
+	 * @param nome Nome della chiave
+	 * @param inter Porta che viene aperta dalla chiave
+	 */
 	public Chiave(String nome, Oggetto inter) {
 		super(nome, inter);
 	}
-
-	public Chiave(String nome) {
-		super(nome);
-	}
-
+	
 	@Override
 	public String use() {
 		return "Devi indicare su cosa usare la chiave";
