@@ -9,22 +9,12 @@ package it.uniroma1.textadv.characters;
 public class Cane extends Animale {
 
 	/**
-	 * Verso del cane
-	 */
-	private static final String VERSO = "Bau bau";
-
-	/**
 	 * Costruttore del cane
 	 * 
 	 * @param nome Nome del cane
 	 */
 	public Cane(String nome) {
-		super(nome);
+		super(nome, new Abbaia(), new Abbaia());
 	}
-
-	@Override
-	public String accarezza() {
-		return VERSO;
-	}
-
+	
 }

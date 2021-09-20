@@ -39,6 +39,7 @@ public class MotoreTestuale {
 		ArrayList<String> parsed = new ArrayList<String>();
 		parsed.addAll(List.of(verbo));
 		if (info.length > 1) {
+			//es. VAI N sarebbe info = vai, N
 			comando[0] = comando[0].replace(info[0] + " ", "");
 			parsed.addAll(List.of(comando));
 		} else if (comando.length > 1)

@@ -19,12 +19,11 @@ import it.uniroma1.textadv.textEngine.ObjFinder;
 public class Rompi extends Verbo implements VerboUnitario, VerboBinario{
 	
 	@Override
-	public String esegui(String stringaInput){
+	public String esegui(String stringaInput) throws ImpossibileOttenereOggetto, ChiaveNecessariaExeption, PagamentoNecessarioException, ElementoInesistenteException{
 		return rompi(stringaInput, null);
 	}
 	 
-	private String rompi(String oggetto, Oggetto oggetto2) {
-			try {
+	private String rompi(String oggetto, Oggetto oggetto2) throws ImpossibileOttenereOggetto, ChiaveNecessariaExeption, PagamentoNecessarioException, ElementoInesistenteException {
 				ElementoStanza ogg = ObjFinder.getArg(oggetto);
 				if (ogg instanceof Breakable) {
 					if (oggetto2 == null)
@@ -32,19 +31,10 @@ public class Rompi extends Verbo implements VerboUnitario, VerboBinario{
 					else
 						return ((Breakable) ogg).rompi(oggetto2);
 				}
-				return "Non puoi rompere " + ogg.getNome();
-			} catch (ElementoInesistenteException e) {
-				return Verbo.NON_TROVATO;
-			} catch (ImpossibileOttenereOggetto e) {
-				return "Err";
-			} catch (ChiaveNecessariaExeption e) {
-				return "Err";
-			} catch (PagamentoNecessarioException e) {
-				return "Err";
-			}}
+				return "Non puoi rompere " + ogg.getNome();}
 	
 	@Override
-	public String esegui(String stringaInput, String oggetto){
+	public String esegui(String stringaInput, String oggetto) throws ImpossibileOttenereOggetto, ChiaveNecessariaExeption, PagamentoNecessarioException, ElementoInesistenteException{
 		Oggetto ogg = (Oggetto) Giocatore.instanceOf().getInventario().get(oggetto);
 		return rompi(stringaInput, ogg);
 	}

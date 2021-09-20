@@ -9,13 +9,17 @@ import it.uniroma1.textadv.ElementoStanza;
  *
  */
 public abstract class Entita extends ElementoStanza {
+	
+	private ComportamentoParla comportamentoParla;
+	
 	/**
 	 * Costruttore della classe
 	 * 
 	 * @param nome Nome dell'entità
 	 */
-	Entita(String nome) {
+	Entita(String nome, ComportamentoParla cp) {
 		super(nome);
+		this.comportamentoParla = cp;
 	}
 
 	/**
@@ -23,7 +27,7 @@ public abstract class Entita extends ElementoStanza {
 	 * @return Stringa con la risposta dell'entita
 	 */
 	public String speak() {
-		return "Ciao, io sono " + super.getNome();
+		return comportamentoParla.speak();
 	}
 
 }

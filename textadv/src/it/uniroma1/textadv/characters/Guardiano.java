@@ -1,6 +1,10 @@
 package it.uniroma1.textadv.characters;
 
 import it.uniroma1.textadv.ElementoStanza;
+import it.uniroma1.textadv.oggetti.ImpossibileOttenereOggetto;
+import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
+import it.uniroma1.textadv.rooms.DirezioneNonConsentitaException;
+import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 import it.uniroma1.textadv.rooms.PagamentoNecessarioException;
 import it.uniroma1.textadv.textEngine.verbs.Prendi;
 
@@ -44,11 +48,15 @@ public class Guardiano extends Personaggio implements Payable{
 	 * Permette di prendere il tesoro
 	 * @return Fornisce il tesoro se il guardiano è stato distratto precedentemente
 	 * @throws PagamentoNecessarioException Se non ha ancora pagato il guardiano
+	 * @throws DirezioneNonConsentitaException Se il guardiano protegge una stanza/link che non posso prendere
+	 * @throws ElementoInesistenteException Se non trovo l'elemento che possiede il guardiano
+	 * @throws ChiaveNecessariaExeption  Se serve aprire un link/box prima di prendere cosa protegge il guardiano
+	 * @throws ImpossibileOttenereOggetto Se non riesco ad ottenere l'oggetto
 	 */
-	public String getTesoro() throws PagamentoNecessarioException {
+	public String getTesoro() throws PagamentoNecessarioException, ImpossibileOttenereOggetto, ChiaveNecessariaExeption, ElementoInesistenteException, DirezioneNonConsentitaException {
 		if (distracted)
 			return new Prendi().esegui(tesoroSegreto.getNome());
-		throw new PagamentoNecessarioException(this,getMsg());
+		throw new PagamentoNecessarioException(getMsg());
 	}
 	
 	private String getMsg() {
@@ -63,7 +71,7 @@ public class Guardiano extends Personaggio implements Payable{
 			for (String s1 : super.getInventario().keySet())
 				super.getInventario().get(s1).setOwner(null);
 			super.getInventario().clear();
-			return "Zzzz....";
+			return "Zzz zzz....";
 		}
 		throw new PagamentoNecessarioException(this);
 	}

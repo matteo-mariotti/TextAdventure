@@ -17,23 +17,11 @@ public class Dai extends Verbo implements VerboBinario{
 
 	
 	@Override
-	public String esegui(String elemento, String dest){
-		try {
+	public String esegui(String elemento, String dest) throws PagamentoNecessarioException, ElementoInesistenteException, ImpossibileOttenereOggetto, ChiaveNecessariaExeption{
 			ElementoStanza e = ObjFinder.getArg(dest);
 			if (e instanceof Payable)
 				return ((Payable) e).pagamento(elemento);
 		return "Non puoi pagare " + dest;
-		} catch (ElementoInesistenteException e) {
-			return Verbo.NON_TROVATO;
-		} catch (ImpossibileOttenereOggetto e) {
-			return "Err";
-		} catch (ChiaveNecessariaExeption e) {
-			return "Err";
-		} catch (PagamentoNecessarioException e1) {
-			return e1.getMessage();
-		}
-
-
 	}
 
 }

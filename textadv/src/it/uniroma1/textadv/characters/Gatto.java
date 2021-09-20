@@ -8,29 +8,12 @@ package it.uniroma1.textadv.characters;
 public class Gatto extends Animale{
 
 	/**
-	 * Verso del gatto
-	 */
-	private static String VERSO = "Miaooooooo!!";
-
-	/**
 	 * Costruttore della classe Gatto
 	 * @param nome Nome dell'animale
 	 */
 	public Gatto(String nome) {
-		super(nome);
+		super(nome, new Miagola(), new Miagola());
 	}
-	
-	@Override
-	public String accarezza() {
-		return VERSO;
-	}
-	
-	/**
-	 * Metodo che permette di parlare con una entita
-	 * @return Stringa con la risposta dell'entita
-	 */
-	public String speak() {
-		return VERSO;
-	}
+
 	
 }

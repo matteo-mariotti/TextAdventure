@@ -22,7 +22,7 @@ public abstract class OggettoCheInteragisce extends Oggetto {
 	 * @param nome  Nome dell'oggetto
 	 * @param inter Elemento con cui interagisce
 	 */
-	public OggettoCheInteragisce(String nome, ElementoStanza inter) {
+	OggettoCheInteragisce(String nome, ElementoStanza inter) {
 		super(nome);
 		interazione = inter;
 	}
@@ -36,7 +36,10 @@ public abstract class OggettoCheInteragisce extends Oggetto {
 		return interazione == null ? false : true;
 	}
 	
-	
+	/**
+	 * Permette di ottenere l'oggetto con cui si interagisce
+	 * @return Oggetto interazione
+	 */
 	public ElementoStanza getOggInter() {
 		return interazione;
 	}

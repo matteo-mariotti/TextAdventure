@@ -5,19 +5,21 @@ import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.ImpossibileOttenereOggetto;
 import it.uniroma1.textadv.oggetti.Oggetto;
 import it.uniroma1.textadv.oggetti.Usable;
+import it.uniroma1.textadv.oggetti.links.Link;
 import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
+import it.uniroma1.textadv.rooms.DirezioneNonConsentitaException;
 import it.uniroma1.textadv.rooms.ElementoInesistenteException;
 import it.uniroma1.textadv.rooms.PagamentoNecessarioException;
-import it.uniroma1.textadv.rooms.DirezioneNonConsentitaException;
 import it.uniroma1.textadv.rooms.Room;
 import it.uniroma1.textadv.textEngine.ObjFinder;
 
 /**
  * Verbo Usare
+ * 
  * @author matte
  *
  */
-public class Usa extends Verbo implements VerboUnitario, VerboBinario{
+public class Usa extends Verbo implements VerboUnitario, VerboBinario {
 
 	/**
 	 * Errore se non possiedo l'oggetto che voglio usare
@@ -27,42 +29,38 @@ public class Usa extends Verbo implements VerboUnitario, VerboBinario{
 	 * Errore se l'oggetto non si può usare
 	 */
 	private static String NOT_USABLE = "Non puoi usare questo oggetto";
-	
+
 	@Override
-	public String esegui(String oggettoDaUsare, String oggettoDest) {
+	public String esegui(String oggettoDaUsare, String oggettoDest) throws ImpossibileOttenereOggetto,
+			ChiaveNecessariaExeption, PagamentoNecessarioException, ElementoInesistenteException {
 		if (!Giocatore.instanceOf().getInventario().containsKey(oggettoDaUsare))
 			return NO_OBJ;
-		ElementoStanza ogg;
 		ElementoStanza ogg1 = (Oggetto) Giocatore.instanceOf().getInventario().get(oggettoDaUsare);
-		try {
-			 ogg = ObjFinder.getArg(oggettoDest);
-			 return exec(ogg1, ogg);
-		} catch (ElementoInesistenteException e) {
-			return Verbo.NON_TROVATO;
-		} catch (ImpossibileOttenereOggetto e) {
-			return "Err";
-		} catch (ChiaveNecessariaExeption e) {
-			return "Err";
-		} catch (PagamentoNecessarioException e) {
-			return "Err";
-		}
+		ElementoStanza ogg = ObjFinder.getArg(oggettoDest);
+		return exec(ogg1, ogg);
 	}
-	
-	private String exec(ElementoStanza usable, ElementoStanza dest){
+
+	private String exec(ElementoStanza usable, ElementoStanza dest) {
 		if (usable instanceof Usable)
-			return ((Usable) usable).use(dest);
+			if (dest != null)
+				return ((Usable) usable).use(dest);
+			else
+				return ((Usable) usable).use();
 		return NOT_USABLE;
 	}
 
 	@Override
-	public String esegui(String linkDaUsare) {
-		try {
-			Room l = Giocatore.instanceOf().getStanza().getDestRoom(linkDaUsare);
+	public String esegui(String linkDaUsare) throws ElementoInesistenteException, DirezioneNonConsentitaException,
+			ChiaveNecessariaExeption, ImpossibileOttenereOggetto, PagamentoNecessarioException {
+		ElementoStanza ogg;
+		if (Giocatore.instanceOf().getInventario().containsKey(linkDaUsare))
+			ogg = Giocatore.instanceOf().getInventario().get(linkDaUsare);
+		else
+			ogg = ObjFinder.getArg(linkDaUsare);
+		if (ogg instanceof Link) {
+			Room l = Giocatore.instanceOf().getStanza().getDestRoom(((Link) ogg).getNome());
 			return Giocatore.instanceOf().setRoom(l);
-		} catch (ElementoInesistenteException | DirezioneNonConsentitaException e) {
-			return Verbo.NON_TROVATO;
-		} catch (ChiaveNecessariaExeption e) {
-			return "Ti serve la chiave corretta!!";
 		}
+		return exec(ogg, null);
 	}
 }

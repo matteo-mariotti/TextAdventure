@@ -1,5 +1,6 @@
 package it.uniroma1.textadv.oggetti.links;
 
+import it.uniroma1.textadv.oggetti.GiaAperto;
 import it.uniroma1.textadv.rooms.Room;
 /**
  * Classe che modella un bus
@@ -15,7 +16,7 @@ public class Bus extends Link{
 	 * @param stanzaDestinazione Stanza di arrivo
 	 */
 	public Bus(String nome,Room stanzaPartenza, Room stanzaDestinazione) {
-		super(nome, stanzaPartenza, stanzaDestinazione);
+		super(nome, stanzaPartenza, stanzaDestinazione, new GiaAperto());
 	}
 
 }

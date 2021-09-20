@@ -10,7 +10,7 @@ import it.uniroma1.textadv.ElementoStanza;
  * @author matte
  *
  */
-public abstract class Personaggio extends Entita {
+abstract class Personaggio extends Entita {
 
 	/**
 	 * Mappa che rappresenta l'inventario del giocatore
@@ -22,8 +22,8 @@ public abstract class Personaggio extends Entita {
 	 * 
 	 * @param nome Nome del personaggio
 	 */
-	public Personaggio(String nome) {
-		super(nome);
+	Personaggio(String nome) {
+		super(nome, new Parla(nome));
 	}
 
 	/**

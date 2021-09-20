@@ -10,20 +10,26 @@ import it.uniroma1.textadv.oggetti.Takeable;
  */
 public abstract class Animale extends Entita implements Takeable {
 
+	private VersoAnimale v;
+	
 	/**
 	 * Costruttore della classe
-	 * 
 	 * @param nome Nome dell'animale
+	 * @param v Verso
+	 * @param cp Comportamento quando parla
 	 */
-	public Animale(String nome) {
-		super(nome);
+	Animale(String nome, VersoAnimale v, ComportamentoParla cp) {
+		super(nome, cp);
+		this.v = v;
 	}
-
+	
 	/**
-	 * Metodo astratto che impone agli animali di essere "accarezzabili"
-	 * 
-	 * @return Verso dell'animale quando viene accarezzato
+	 * Metodo per accarezzare un animale
+	 * @return Verso dell'animale
 	 */
-	public abstract String accarezza();
+	public String accarezza() {
+		return v.verso();
+	}
+	
 
 }

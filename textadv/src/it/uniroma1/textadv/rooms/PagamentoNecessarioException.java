@@ -10,10 +10,9 @@ public class PagamentoNecessarioException extends Exception {
 
 	/**
 	 * Costruttore dell'eccezione
-	 * @param e Entità da pagare
  	 * @param s Messaggio
 	 */
-	public PagamentoNecessarioException(Entita e, String s) {
+	public PagamentoNecessarioException(String s) {
 		super(s);
 	}
 	

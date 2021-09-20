@@ -16,20 +16,9 @@ import it.uniroma1.textadv.textEngine.ObjFinder;
 public class Guarda extends Verbo implements VerboUnitario{
 
 	@Override
-	public String esegui(String elemento){
-		ElementoStanza ogg;
-		try {
-			ogg = ObjFinder.getArg(elemento);
+	public String esegui(String elemento) throws ImpossibileOttenereOggetto, ChiaveNecessariaExeption, PagamentoNecessarioException, ElementoInesistenteException{
+			ElementoStanza ogg = ObjFinder.getArg(elemento);
 			return ogg.describe();
-		} catch (ElementoInesistenteException e) {
-			return Verbo.NON_TROVATO;
-		} catch (ImpossibileOttenereOggetto e) {
-			return "Err";
-		} catch (ChiaveNecessariaExeption e) {
-			return "Err";
-		} catch (PagamentoNecessarioException e) {
-			return "Err";
-		}
 	}
 	
 	@Override

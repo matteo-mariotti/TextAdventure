@@ -2,10 +2,13 @@ package it.uniroma1.textadv.oggetti;
 
 import it.uniroma1.textadv.characters.Giocatore;
 import it.uniroma1.textadv.oggetti.links.Link;
-import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
 import it.uniroma1.textadv.rooms.DirezioneNonConsentitaException;
 import it.uniroma1.textadv.rooms.Room;
-
+/**
+ * Classe che modella una statua
+ * @author matte
+ *
+ */
 public class Statua extends OggettoCheInteragisce implements Breakable{
 
 	/**
@@ -34,9 +37,9 @@ public class Statua extends OggettoCheInteragisce implements Breakable{
 			{
 				try {
 					Link l = (Link) super.interazione;
-					l.unlock(this);
+					l.setCompApertura(new GiaAperto());
 					Giocatore.instanceOf().getStanza().bonusB(new Room.LinkTuple(l.getConnection(Giocatore.instanceOf().getStanza().getNome()), l));
-				} catch (ChiaveNecessariaExeption | DirezioneNonConsentitaException e) {
+				} catch (DirezioneNonConsentitaException e) {
 					e.printStackTrace();
 				}
 			}

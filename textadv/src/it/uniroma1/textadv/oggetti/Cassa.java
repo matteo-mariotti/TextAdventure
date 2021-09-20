@@ -1,21 +1,19 @@
 package it.uniroma1.textadv.oggetti;
-
-public class Cassa extends Box implements Openable{
-	
+/**
+ * Classe che modella un cassa che può contenere un oggetto
+ * @author matte
+ *
+ */
+public class Cassa extends Box{
+	/**
+	 * Costruttore della classe
+	 * @param nome Nome della cassa
+	 * @param inter Oggetto contenuto nella cassa
+	 */
 	public Cassa(String nome, Oggetto inter) {
-		super(nome, inter);
-	}
-	
-	@Override
-	public String open() {
-		super.setStatus(true);
-		return "La cassa è ora aperta";
+		super(nome, inter, new ApriSenzaChiave());
 	}
 
-	@Override
-	public boolean unlock(OggettoCheInteragisce ogg) {
-		return true;
-	}
 
 
 }

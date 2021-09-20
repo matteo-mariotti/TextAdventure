@@ -14,15 +14,13 @@ import it.uniroma1.textadv.textEngine.Direzione;
 public class Vai extends Verbo implements VerboUnitario{
 
 	@Override
-	public String esegui(String s){
+	public String esegui(String s) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption{
 		String format = s.toUpperCase();
 		try {
 			Room r = Giocatore.instanceOf().getStanza().getDestRoom(Direzione.valueOf(format));
 			return Giocatore.instanceOf().setRoom(r);
-		} catch (IllegalArgumentException | DirezioneNonConsentitaException e) {
-			return "La direzione inserita non è valida";
-		}catch (ChiaveNecessariaExeption e) {
-			return "Questo collegamento è chiuso, devi prima aprirlo";
+		}catch(IllegalArgumentException e) {
+			throw new DirezioneNonConsentitaException();
 		}
 	}
 

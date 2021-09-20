@@ -53,6 +53,10 @@ public enum Direzione {
 	/**
 	 * Direzione Est
 	 */
-	E, B;
+	E, 
+	/**
+	 * Direzione Bonus
+	 */
+	B;
 
 }

@@ -11,7 +11,7 @@ public class Camino extends Box{
 	/**
 	 * Flag che indica se il camino è acceso o spento
 	 */
-	boolean bAcceso = true;
+	private boolean bAcceso = true;
 
 	/**
 	 * Costruttore del camino
@@ -19,7 +19,7 @@ public class Camino extends Box{
 	 * @param inter Oggetto contenuto nel camino
 	 */
 	public Camino(String nome, Oggetto inter) {
-		super(nome, inter);
+		super(nome, inter, new NonApribile());
 	}
 	
 	@Override
@@ -32,7 +32,7 @@ public class Camino extends Box{
 	 * @param sec Secchio con cui spegnere il camino
 	 * @return Stringa con il risultato dell'operazione
 	 */
-	public String spegni(Secchio sec) {
+	String spegni(Secchio sec) {
 		if (sec.filled()) {
 			bAcceso = false;
 			sec.empty();
@@ -52,7 +52,7 @@ public class Camino extends Box{
 			super.interazione = null;
 			return o;
 		} else
-			throw new ImpossibileOttenereOggetto(); //TODO Lancia una eccezione perche non contiene l'elemento
+			throw new ImpossibileOttenereOggetto(); //Lancia una eccezione perche non contiene l'elemento
 	}
 
 }

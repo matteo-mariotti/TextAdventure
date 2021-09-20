@@ -1,9 +1,9 @@
 package it.uniroma1.textadv.oggetti.links;
 
+import it.uniroma1.textadv.oggetti.ApriConChiave;
+import it.uniroma1.textadv.oggetti.ApriSenzaChiave;
+import it.uniroma1.textadv.oggetti.ComportamentoApertura;
 import it.uniroma1.textadv.oggetti.Oggetto;
-import it.uniroma1.textadv.oggetti.OggettoCheInteragisce;
-import it.uniroma1.textadv.oggetti.Openable;
-import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
 import it.uniroma1.textadv.rooms.DirezioneNonConsentitaException;
 import it.uniroma1.textadv.rooms.Room;
 
@@ -13,24 +13,16 @@ import it.uniroma1.textadv.rooms.Room;
  * @author matte
  *
  */
-public abstract class Link extends Oggetto implements Openable {
+public abstract class Link extends Oggetto{
 
 	/**
 	 * Stanza di partenza
 	 */
-	Room stanza1;
+	private Room stanza1;
 	/**
 	 * Stanza destinazione
 	 */
-	Room stanza2;
-	/**
-	 * Flag per indicare se il collegamento è aperto o chiuso
-	 */
-	boolean bChiuso = false;
-	/**
-	 * Oggetto con cui si sblocca il collegamento
-	 */
-	Oggetto chiave;
+	private Room stanza2;
 
 	/**
 	 * Costruttore della classe
@@ -39,10 +31,22 @@ public abstract class Link extends Oggetto implements Openable {
 	 * @param stanzaPartenza     Stanza di partenza
 	 * @param stanzaDestinazione Stanza destinazione
 	 */
-	public Link(String nome, Room stanzaPartenza, Room stanzaDestinazione) {
+	Link(String nome, Room stanzaPartenza, Room stanzaDestinazione, ComportamentoApertura cp) {
 		super(nome);
 		stanza1 = stanzaPartenza;
 		stanza2 = stanzaDestinazione;
+		super.setCompApertura(cp);
+	}
+	
+	/**
+	 * Costruttore della classe
+	 * 
+	 * @param nome               Nome del collegamento
+	 * @param stanzaPartenza     Stanza di partenza
+	 * @param stanzaDestinazione Stanza destinazione
+	 */
+	Link(String nome, Room stanzaPartenza, Room stanzaDestinazione) {
+		this(nome, stanzaPartenza,stanzaDestinazione, new ApriSenzaChiave());
 	}
 
 	/**
@@ -61,55 +65,15 @@ public abstract class Link extends Oggetto implements Openable {
 		throw new DirezioneNonConsentitaException();
 	}
 
-	/**
-	 * Metodo che permette di sapere se il link è aperto o chiuso
-	 * 
-	 * @return True se chiuso, False se aperto
-	 */
-	public boolean status() {
-		return bChiuso;
-	}
-
-	/**
-	 * Permette di chiudere il link con un oggetto chiave
-	 * 
-	 * @param chiave Oggetto che blocca il link
-	 */
-	public void setClosed(Oggetto chiave) {
-		lock();
-		this.chiave = chiave;
-	}
-
 	@Override
 	public String toString() {
 		return super.nome;
 	}
-
-	@Override
-	public String open() {
-		if (chiave == null) {
-			bChiuso = false;
-			return "" + getNome() + " è stato aperto/era già aperto";
-		} else {
-			return "" + getNome() + " è ancora chiuso";
-		}
-	}
-
+	
 	/**
 	 * Permette di chiudere il link
 	 */
 	public void lock() {
-		bChiuso = true;
+		super.setCompApertura(new ApriConChiave());
 	}
-
-	@Override
-	public boolean unlock(OggettoCheInteragisce chiave) throws ChiaveNecessariaExeption {
-		if (this.chiave == chiave) {
-			this.chiave = null;
-			bChiuso = false;
-			return true;
-		}
-		throw new ChiaveNecessariaExeption();
-	}
-
 }

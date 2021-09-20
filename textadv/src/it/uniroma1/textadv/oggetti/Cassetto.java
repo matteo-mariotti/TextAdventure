@@ -4,7 +4,7 @@ package it.uniroma1.textadv.oggetti;
  * @author matte
  *
  */
-public class Cassetto extends Box implements Openable{
+public class Cassetto extends Box{
 	
 	/**
 	 * Costruttore della classe
@@ -12,18 +12,7 @@ public class Cassetto extends Box implements Openable{
 	 * @param inter Oggetto contenuto
 	 */
 	public Cassetto(String nome, Oggetto inter) {
-		super(nome, inter);
-	}
-	
-	@Override
-	public boolean unlock(OggettoCheInteragisce ogg) {
-		return true;
-	}
-
-	@Override
-	public String open() {
-		super.setStatus(true);
-		return "Il cassetto è ora aperto";
+		super(nome, inter, new ApriSenzaChiave());
 	}
 
 	

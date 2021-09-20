@@ -21,21 +21,11 @@ public class Parla extends Verbo implements VerboUnitario{
 	private static final String NOT_ALLOWED = "Non puoi parlare con ";
 	
 	@Override
-	public String esegui(String entita) {
-		try {
+	public String esegui(String entita) throws ImpossibileOttenereOggetto, ChiaveNecessariaExeption, PagamentoNecessarioException, ElementoInesistenteException {
 			ElementoStanza e = ObjFinder.getArg(entita);
 			if (e instanceof Entita)
 				return ((Entita) e).speak();
 			return NOT_ALLOWED + e.getNome();
-		} catch (ElementoInesistenteException e) {
-			return Verbo.NON_TROVATO;
-		} catch (ImpossibileOttenereOggetto e) {
-			return "Err";
-		} catch (ChiaveNecessariaExeption e) {
-			return "Err";
-		} catch (PagamentoNecessarioException e) {
-			return "Err";
-		}
 	}
 
 	

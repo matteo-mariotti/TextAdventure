@@ -28,28 +28,36 @@ import it.uniroma1.textadv.rooms.Room;
  * @author matte
  *
  */
-public class Mondo {
+class Mondo {
 	/**
 	 * Unica istanza del Giocatore presente nel gioco
 	 */
-	Giocatore player = Giocatore.instanceOf();
+	private Giocatore player = Giocatore.instanceOf();
 	/**
 	 * Nome del mondo
 	 */
-	String worldName;
+	private String worldName;
 	/**
 	 * Descrizione del mondo
 	 */
-	String description;
+	private String description;
 	/**
 	 * Stanza di inizio gioco
 	 */
-	String startingRoom;
+	private String startingRoom;
 	/**
 	 * Oggetto con cui si vince il gioco
 	 */
-	Tesoro oggettoVittoria;
+	private Tesoro oggettoVittoria;
 
+	/**
+	 * Permette di ottenere la descrizione del mondo
+	 * @return Descrizione
+	 */
+	public String getDescription() {
+		return description;
+	}
+	
 	/**
 	 * Metodo per impostare il nome del mondo
 	 * 
@@ -103,7 +111,7 @@ public class Mondo {
 	 * @return Mondo istanziato
 	 * @throws IOException Se c'è un errore durante la lettura del file
 	 */
-	public static Mondo fromFile(Path path) throws IOException {
+	static Mondo fromFile(Path path) throws IOException {
 		Mondo m = new Mondo();
 		// Creo un buffer per leggere il file
 		BufferedReader text = Files.newBufferedReader(path);
@@ -486,7 +494,7 @@ public class Mondo {
 					Link link = links.get(interazione);
 					object = (Oggetto) costruttore.newInstance(nomeOggetto, link);
 					oggetti.put(nomeOggetto, object);
-					link.setClosed(object);
+					link.lock();
 				} else if (oggetti.containsKey(interazione)) {
 					// Se è un oggetto
 					Oggetto ogg = oggetti.get(interazione);

@@ -20,23 +20,13 @@ public class Accarezza extends Verbo implements VerboUnitario {
 	private static final String NON_ANIMALE = "Non puoi accarezzarlo!";
 	
 	@Override
-	public String esegui(String entita) {
-		try {
+	public String esegui(String entita) throws ImpossibileOttenereOggetto, ChiaveNecessariaExeption, PagamentoNecessarioException, ElementoInesistenteException {
 			ElementoStanza ent = ObjFinder.getArg(entita);
 			if (ent instanceof Animale) {
 				Animale a = (Animale) ent;
 				return a.accarezza();
 			}
 			return NON_ANIMALE;
-		} catch (ElementoInesistenteException e) {
-			return Verbo.NON_TROVATO;
-		} catch (ImpossibileOttenereOggetto e) {
-			return "Err";
-		} catch (ChiaveNecessariaExeption e) {
-			return "Err";
-		} catch (PagamentoNecessarioException e) {
-			return "Err";
-		}
 	}
 
 }

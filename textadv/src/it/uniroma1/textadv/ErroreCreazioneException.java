@@ -5,9 +5,13 @@ package it.uniroma1.textadv;
  *
  */
 @SuppressWarnings("serial")
-public class ErroreCreazioneException extends RuntimeException {
+class ErroreCreazioneException extends RuntimeException {
 	
-	public ErroreCreazioneException(String mess) {
+	/**
+	 * Costruttore dell'eccezione
+	 * @param mess Messaggio di errore
+	 */
+	ErroreCreazioneException(String mess) {
 		super(mess);
 	}
 

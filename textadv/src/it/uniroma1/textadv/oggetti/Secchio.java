@@ -4,37 +4,42 @@ import it.uniroma1.textadv.ElementoStanza;
 
 /**
  * Classe che modella un secchio
+ * 
  * @author matte
  *
  */
-public class Secchio extends  Oggetto implements Usable, Takeable{
-	
+public class Secchio extends Oggetto implements Usable, Takeable {
+
 	/**
 	 * Flag per indicare se il secchio è pieno o meno
 	 */
-	boolean pieno = false;
-	
+	private boolean pieno = false;
+
 	/**
 	 * Costruttore della classe Secchio
+	 * 
 	 * @param nome Nome del secchio
 	 */
 	public Secchio(String nome) {
 		super(nome);
 	}
+
 	/**
 	 * Metodo che permette di riempire il secchio
 	 */
-	public void fill() {
+	void fill() {
 		pieno = true;
-		}
-	
+	}
+
 	/**
 	 * Permette di conoscere se il secchio è pieno o meno
+	 * 
 	 * @return True se il secchio è pieno, false altrimenti
 	 */
-	public boolean filled() {
+	boolean filled() {
 		return pieno;
 	}
+
 	@Override
 	public String use() {
 		return "Devi indicare su cosa usare il secchio";
@@ -43,10 +48,10 @@ public class Secchio extends  Oggetto implements Usable, Takeable{
 	/**
 	 * Metodo che permette di svuotare il secchio
 	 */
-	public void empty() {
+	void empty() {
 		pieno = false;
 	}
-	
+
 	@Override
 	public String use(ElementoStanza e) {
 		if (e instanceof Pozzo)

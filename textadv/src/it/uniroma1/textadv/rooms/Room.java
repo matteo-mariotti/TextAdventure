@@ -30,11 +30,11 @@ public class Room {
 		/**
 		 * Stanza collegata
 		 */
-		Room stanza;
+		private Room stanza;
 		/**
 		 * Link collegato
 		 */
-		Link l;
+		private Link l;
 
 		/**
 		 * Costruttore della classe
@@ -88,9 +88,9 @@ public class Room {
 		 * @return True o false se il link è bloccato o meno
 		 */
 		public boolean locked() {
-			if (l != null)
-				return l.status();
-			return false;
+			if (l == null)
+				return true;
+			return l.getStatuss();
 		}
 
 		@Override
@@ -238,30 +238,8 @@ public class Room {
 		case WEST, O, OVEST, W -> getDirection(linkW);
 		case EAST, EST, E -> getDirection(linkE);
 		case B -> getDirection(bonusB);
+		default -> throw new DirezioneNonConsentitaException();
 		};
-	}
-
-	/**
-	 * Permette di prendere un elemento dalla stanza se non appartiene a nessuna
-	 * entità
-	 * 
-	 * @param nomeElemento Nome dell'elemento da prendere
-	 * @return Elemento della stanza cercato
-	 * @throws ElementoInesistenteException Se non è presente l'elemento che cerco
-	 * @throws PagamentoNecessarioException Se è necessario pagare una entità prima
-	 *                                      di prendere l'elemento
-	 */
-	public ElementoStanza getElemento(String nomeElemento)
-			throws ElementoInesistenteException, PagamentoNecessarioException {
-		if (elementi.containsKey(nomeElemento)) {
-			ElementoStanza e = elementi.get(nomeElemento);
-			if (e.getOwner() == null) {
-				elementi.remove(nomeElemento);
-				return e;
-			} else
-				throw new PagamentoNecessarioException(e.getOwner());
-		}
-		throw new ElementoInesistenteException();
 	}
 
 	/**
@@ -332,13 +310,13 @@ public class Room {
 	private Room getDirection(LinkTuple link) throws DirezioneNonConsentitaException, ChiaveNecessariaExeption {
 		if (link == null)
 			throw new DirezioneNonConsentitaException();
-		if (link.locked())
+		if (!(link.locked()))
 			throw new ChiaveNecessariaExeption();
 		return link.getRoom();
 	}
 
 	/**
-	 * Permette di aggiugere elementi alla stanza
+	 * Permette di aggiungere elementi alla stanza
 	 * 
 	 * @param ogg Elemento da aggiungere
 	 */
@@ -377,5 +355,13 @@ public class Room {
 		s.append("\nLa stanza contiene: ");
 		s.append(elementi.keySet());
 		return s.toString();
+	}
+
+	/**
+	 * Permette di rimuovere un elemento
+	 * @param ogg Elemento da rimuovere
+	 */
+	public void remove(ElementoStanza ogg) {
+		elementi.remove(ogg.getNome());
 	}
 }

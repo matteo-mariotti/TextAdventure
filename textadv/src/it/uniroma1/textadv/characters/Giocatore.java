@@ -1,5 +1,6 @@
 package it.uniroma1.textadv.characters;
 
+import it.uniroma1.textadv.oggetti.Cibo;
 import it.uniroma1.textadv.rooms.Room;
 
 /**
@@ -58,5 +59,14 @@ public class Giocatore extends Personaggio {
 	public String setRoom(Room stanza) {
 		stanzaCorrente = stanza;
 		return "Ti trovi ora in " + stanza.getNome();
+	}
+	/**
+	 * Metodo che permette al giocatore di mangiare
+	 * @param cibo Cibo da mangiare
+	 * @return Stringa con il risultato dell'operazione
+	 */
+	public String mangia(Cibo cibo) {
+		Giocatore.instanceOf().getStanza().remove(cibo);
+		return "Gnam! Hai mangiato: " + cibo.getNome();
 	}
 }

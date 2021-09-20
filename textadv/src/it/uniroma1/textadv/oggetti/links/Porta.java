@@ -1,5 +1,6 @@
 package it.uniroma1.textadv.oggetti.links;
 
+import it.uniroma1.textadv.oggetti.ApriSenzaChiave;
 import it.uniroma1.textadv.rooms.Room;
 /**
  * Classe che modella una generica porta
@@ -15,8 +16,6 @@ public class Porta extends Link{
 	 * @param stanzaDestinazione Stanza 2
 	 */
 	public Porta(String nome, Room stanzaPartenza, Room stanzaDestinazione) {
-		super(nome, stanzaPartenza, stanzaDestinazione);
-		//Di default tutte le porte sono chiuse
-		super.lock();
+		super(nome, stanzaPartenza, stanzaDestinazione, new ApriSenzaChiave());
 	}
 }

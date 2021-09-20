@@ -1,14 +1,17 @@
 package it.uniroma1.textadv.oggetti.links;
 
+import it.uniroma1.textadv.characters.Giocatore;
+import it.uniroma1.textadv.oggetti.OggettoCheInteragisce;
+import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
+import it.uniroma1.textadv.rooms.DirezioneNonConsentitaException;
 import it.uniroma1.textadv.rooms.Room;
-import it.uniroma1.textadv.textEngine.verbs.Prendi;
 
 /**
  * Classe che modella l'oggetto teletrasporto del gioco
  * @author matte
  *
  */
-public class Teletrasporto extends Link {
+public class Teletrasporto extends Link{
 	
 	/**
 	 * Costruttore della classe
@@ -21,11 +24,13 @@ public class Teletrasporto extends Link {
 	}
 
 	@Override
-	public String open() {
-		if (!(bChiuso))
-			return new Prendi().esegui(this.getNome());
-		return "Ti serve una chiave per usare il teletrasporto";
+	public String open(OggettoCheInteragisce c) throws ChiaveNecessariaExeption {
+		super.open(c);
+		try {
+			return Giocatore.instanceOf().setRoom(super.getConnection(Giocatore.instanceOf().getStanza().getNome()));
+		} catch (DirezioneNonConsentitaException e) {
+			return "Si è verificato un errore";
+		}
 	}
-
 
 }

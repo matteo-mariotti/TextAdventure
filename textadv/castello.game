@@ -27,18 +27,13 @@ links	O:porta cucina,N:dispensa
 
 [room:dispensa]
 description	La dispensa della cucina, non sarebbe il caso di riempirla?
-objects	pera,bistecca
+objects	pera,bistecca, chiave rossa
 links	S:cucina
 
 [room:camera reale]
 description	Camera principale del castello
 objects	letto reale, armadio
-links	O:porta reale,E:guardaroba
-
-[room:guardaroba]
-description	Il guardaroba del principe
-objects	vestito rosso, vestito blu, camicia
-links	O:camera reale
+links	O:porta reale,S:porta emergenza
 
 [room:caveau]
 description	Il caveau dove i reali tengono nascosti i loro beni
@@ -116,9 +111,6 @@ letto reale	Letto
 pera	Cibo
 pesca	Cibo
 bistecca	Cibo
-vestito rosso	Vestito
-vestito blu	Vestito
-camicia	Vestito
 montagna di gioielli	Tesoro
 cannone	Cannone
 cassa	Cassa	chiave cucina

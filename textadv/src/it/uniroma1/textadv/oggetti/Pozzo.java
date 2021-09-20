@@ -11,7 +11,7 @@ public class Pozzo extends Oggetto {
 	 * Costruttore della classe pozzo
 	 * @param nome Nome del pozzo
 	 */
-	public Pozzo(String nome) {
+	public Pozzo(String nome) { // NO_UCD (unused code)
 		super(nome);
 	}
 
@@ -22,7 +22,7 @@ public class Pozzo extends Oggetto {
 	 */
 	public String riempi(Secchio sec) {
 		sec.fill();
-		return "" + sec + "è stato riempito";
+		return "" + sec + " è stato riempito";
 	}
 	
 }

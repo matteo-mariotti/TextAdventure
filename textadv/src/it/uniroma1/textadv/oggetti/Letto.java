@@ -1,23 +1,25 @@
 package it.uniroma1.textadv.oggetti;
+/**
+ * Classe che modella un letto contenitore
+ * @author matte
+ *
+ */
+public class Letto extends Box{
 
-public class Letto extends Box implements Openable{
-
+	/**
+	 * Costruttore della classe
+	 * @param nome Nome del letto
+	 * @param inter Oggetto contenuto
+	 */
 	public Letto(String nome, Oggetto inter) {
-		super(nome, inter);
+		super(nome, inter, new ApriSenzaChiave());
 	}
 
+	/**
+	 * Costruttore della classe
+	 * @param nome Nome del letto
+	 */
 	public Letto(String nome) {
-		super(nome, null);
-	}
-	
-	@Override
-	public String open() {
-		super.setStatus(true);
-		return "Il letto è ora aperto, puoi vedere cosa c'è nel cassone sotto";
-	}
-
-	@Override
-	public boolean unlock(OggettoCheInteragisce ogg) {
-		return true;
+		this(nome, null);
 	}
 }

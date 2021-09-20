@@ -1,13 +1,11 @@
 package it.uniroma1.textadv.oggetti;
 
-import it.uniroma1.textadv.rooms.ChiaveNecessariaExeption;
-
 /**
  * Classe che modella una vite
  * @author matte
  *
  */
-public class Vite extends OggettoCheInteragisce implements Unscrewable{
+public class Vite extends OggettoCheInteragisce implements Unscrewable{ // NO_UCD (unused code)
 /**
  * Costruttore della classe 
  * @param nome Nome dell'oggetto
@@ -20,12 +18,11 @@ public class Vite extends OggettoCheInteragisce implements Unscrewable{
 	
 	@Override
 	public String svita() {
-		try {
-			((Openable) super.interazione).unlock(this);
-			return "Vite svitata";
-		} catch (ChiaveNecessariaExeption e) {
-			return "Non è stato possibile aprire " + super.interazione;
-		}
+			if (super.interazione instanceof Oggetto) {
+				((Oggetto)super.interazione).setCompApertura(new ApriSenzaChiave());
+				return "Vite svitata";}
+			else 
+				return "Non puoi aprire " + super.interazione;
 	}
 
 	

@@ -1,5 +1,6 @@
 package it.uniroma1.textadv.oggetti.links;
 
+import it.uniroma1.textadv.oggetti.GiaAperto;
 import it.uniroma1.textadv.rooms.Room;
 
 /**
@@ -17,7 +18,7 @@ public class Botola extends Link {
 	 * @param stanzaDestinazione Stanza in cui si va
 	 */
 	public Botola(String nome, Room stanzaPartenza, Room stanzaDestinazione) {
-		super(nome, stanzaPartenza, stanzaDestinazione);
+		super(nome, stanzaPartenza, stanzaDestinazione, new GiaAperto());
 	}
 
 }

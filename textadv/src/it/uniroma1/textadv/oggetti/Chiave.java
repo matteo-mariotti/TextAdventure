@@ -26,10 +26,9 @@ public class Chiave extends OggettoCheInteragisce implements Usable, Takeable{
 
 	@Override
 	public String use(ElementoStanza e) {
-		if (e instanceof Openable) {
+		if (e instanceof Oggetto) {
 			try {
-				((Openable) e).unlock(this);
-				return ((Openable) e).open();	
+				return ((Oggetto) e).open(this);	
 			} catch (ChiaveNecessariaExeption e1) {
 				return "Non hai fornito la chiave corretta!";
 			}

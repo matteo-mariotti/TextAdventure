@@ -4,7 +4,7 @@ package it.uniroma1.textadv.oggetti;
  * @author matte
  *
  */
-public class Scrivania extends Box implements Openable {
+public class Scrivania extends Box {
 
 	/**
 	 * Costruttore della classe Scrivania
@@ -12,18 +12,6 @@ public class Scrivania extends Box implements Openable {
 	 * @param inter Oggetto contenuto nella scrivania
 	 */
 	public Scrivania(String nome, Oggetto inter) {
-		super(nome, inter);
+		super(nome, inter, new ApriSenzaChiave());
 	}
-
-	@Override
-	public String open() {
-		super.setStatus(true);
-		return "La scrivania è ora aperta";
-	}
-
-	@Override
-	public boolean unlock(OggettoCheInteragisce ogg) {
-		return true;
-	}
-
 }
